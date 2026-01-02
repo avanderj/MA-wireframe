@@ -36,9 +36,9 @@ export function DiscoverToolsSection({
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                {appBundles.map((bundle) => {
+                {appBundles.map((bundle, index) => {
                     const Icon = bundle.icon;
-                    return (
+                    return index < 4 && (
                         <button
                             key={bundle.id}
                             onClick={() => onBundleClick(bundle)}
