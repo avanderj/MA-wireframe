@@ -112,7 +112,7 @@ export function UnifiedApplicationsSection({
 
                 {/* View Mode Toggle - More Prominent */}
                 <div className="mb-8">
-                    <div className="inline-flex bg-white rounded-2xl p-1.5 border-2 border-gray-200">
+                    <div className="inline-flex bg-white rounded-2xl p-1.5 border-2 border-gray-200 gap-2">
                         <button
                             onClick={() => onViewModeChange("saved")}
                             className={`px-8 py-3.5 rounded-xl font-bold transition-all flex items-center gap-2 ${viewMode === "saved"

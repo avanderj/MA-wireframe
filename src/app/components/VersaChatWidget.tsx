@@ -86,22 +86,22 @@ export function VersaChatWidget({ hasAccess }: VersaChatWidgetProps) {
   };
 
   const formatTime = (date: Date) => {
-    return date.toLocaleTimeString('en-US', { 
-      hour: 'numeric', 
+    return date.toLocaleTimeString('en-US', {
+      hour: 'numeric',
       minute: '2-digit',
-      hour12: true 
+      hour12: true
     });
   };
 
   // No Access View - Documentation Link
   if (!hasAccess) {
     return (
-      <div className="fixed bottom-6 right-6 z-40">
+      <div className="fixed bottom-6 right-6 z-40 bg-white rounded-2xl ">
         <a
           href="https://ucsf.edu/versa-ai-assistant-docs"
           target="_blank"
           rel="noopener noreferrer"
-          className="group flex items-center gap-3 px-6 py-5 bg-white text-gray-900 rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-105 border-2 border-gray-200"
+          className="group flex items-center gap-3 px-6 py-5 bg-white text-gray-900 rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-300 border-2 border-gray-200"
         >
           <div className="relative w-10 h-10 flex-shrink-0">
             <img src={versaLogo} alt="Versa AI" className="w-full h-full object-contain" />
@@ -121,26 +121,25 @@ export function VersaChatWidget({ hasAccess }: VersaChatWidgetProps) {
     <>
       {/* Chat Widget */}
       {isOpen && (
-        <div 
-          className={`fixed bottom-24 right-6 bg-white rounded-2xl shadow-2xl border-2 border-gray-200 overflow-hidden transition-all duration-300 z-40 flex flex-col ${
-            isMinimized ? 'w-80 h-16' : 'w-96 h-[600px]'
-          }`}
+        <div
+          className={`fixed bottom-24 right-6 bg-white rounded-2xl shadow-2xl border-2 border-gray-200 overflow-hidden transition-all duration-300 z-40 flex flex-col ${isMinimized ? 'w-80 h-16' : 'w-96 h-[600px]'
+            }`}
         >
           {/* Header */}
-          <div className="bg-gradient-to-r from-[#052049] to-[#18A1CD] text-white px-5 py-4 flex items-center justify-between flex-shrink-0">
+          <div className="bg-gradient-to-r from-[#052049] to-[#18A1CD] text-black px-5 py-4 flex items-center justify-between flex-shrink-0">
             <div className="flex items-center gap-3">
               <div className="relative w-7 h-7 flex-shrink-0">
                 <img src={versaLogo} alt="Versa AI" className="w-full h-full object-contain" />
               </div>
               <div>
                 <h3 className="font-bold text-sm tracking-tight">Versa AI Assistant</h3>
-                {!isMinimized && <p className="text-xs text-white/80 mt-0.5">Online • Ready to help</p>}
+                {!isMinimized && <p className="text-xs text-black/80 mt-0.5">Online • Ready to help</p>}
               </div>
             </div>
             <div className="flex items-center gap-1">
               <button
                 onClick={() => setIsMinimized(!isMinimized)}
-                className="p-1.5 hover:bg-white/20 rounded-lg transition-colors"
+                className="p-1.5 rounded-lg transition-colors"
                 aria-label={isMinimized ? "Maximize chat" : "Minimize chat"}
               >
                 {isMinimized ? (
@@ -151,7 +150,7 @@ export function VersaChatWidget({ hasAccess }: VersaChatWidgetProps) {
               </button>
               <button
                 onClick={() => setIsOpen(false)}
-                className="p-1.5 hover:bg-white/20 rounded-lg transition-colors"
+                className="p-1.5 rounded-lg transition-colors"
                 aria-label="Close chat"
               >
                 <X className="w-4 h-4" />
@@ -170,11 +169,10 @@ export function VersaChatWidget({ hasAccess }: VersaChatWidgetProps) {
                     className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
                   >
                     <div
-                      className={`max-w-[80%] rounded-2xl px-4 py-3 ${
-                        message.sender === 'user'
-                          ? 'bg-gradient-to-r from-[#052049] to-[#18A1CD] text-white'
-                          : 'bg-white border-2 border-gray-200 text-gray-900'
-                      }`}
+                      className={`max-w-[80%] rounded-2xl px-4 py-3 ${message.sender === 'user'
+                        ? 'bg-gradient-to-r from-[#052049] to-[#18A1CD] text-white'
+                        : 'bg-white border-2 border-gray-200 text-gray-900'
+                        }`}
                     >
                       {message.sender === 'versa' && (
                         <div className="flex items-center gap-2 mb-2">
@@ -183,9 +181,8 @@ export function VersaChatWidget({ hasAccess }: VersaChatWidgetProps) {
                         </div>
                       )}
                       <p className="text-sm leading-relaxed">{message.text}</p>
-                      <p className={`text-xs mt-2 ${
-                        message.sender === 'user' ? 'text-white/60' : 'text-gray-400'
-                      }`}>
+                      <p className={`text-xs mt-2 ${message.sender === 'user' ? 'text-white/60' : 'text-gray-400'
+                        }`}>
                         {formatTime(message.timestamp)}
                       </p>
                     </div>
@@ -200,13 +197,13 @@ export function VersaChatWidget({ hasAccess }: VersaChatWidgetProps) {
                   <p className="text-xs font-semibold text-gray-500 mb-2">Suggested prompts:</p>
                   <button
                     onClick={() => setInputValue("How do I request access to an application?")}
-                    className="w-full text-left px-3 py-2 bg-gray-50 hover:bg-gray-100 rounded-lg text-xs text-gray-700 transition-colors border border-gray-200"
+                    className="w-full text-left px-3 py-2 bg-gray-50 rounded-lg text-xs text-gray-700 transition-colors border border-gray-200"
                   >
                     How do I request access to an application?
                   </button>
                   <button
                     onClick={() => setInputValue("Show me research tools")}
-                    className="w-full text-left px-3 py-2 bg-gray-50 hover:bg-gray-100 rounded-lg text-xs text-gray-700 transition-colors border border-gray-200"
+                    className="w-full text-left px-3 py-2 bg-gray-50 rounded-lg text-xs text-gray-700 transition-colors border border-gray-200"
                   >
                     Show me research tools
                   </button>
@@ -250,12 +247,10 @@ export function VersaChatWidget({ hasAccess }: VersaChatWidgetProps) {
           className="group fixed bottom-6 right-6 w-16 h-16 bg-white rounded-full shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-110 flex items-center justify-center z-40 border-2 border-gray-200"
           aria-label="Open Versa AI Assistant"
         >
-          <img src={versaLogo} alt="Versa AI" className="w-10 h-10 object-contain" />
-          
+          <img src={versaLogo} alt="Versa AI" className="w-16 h-16 object-contain" />
           {/* Tooltip */}
-          <div className="absolute bottom-full right-0 mb-3 px-4 py-2 bg-gray-900 text-white text-sm font-semibold rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+          <div className="absolute bottom-full right-0 mb-3 px-4 py-2 bg-gray-900 text-black text-sm font-semibold rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
             Chat with Versa AI
-            <div className="absolute top-full right-6 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900"></div>
           </div>
         </button>
       )}

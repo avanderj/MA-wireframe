@@ -5,6 +5,7 @@ import { AppBundle } from './AppBundlesSection';
 import { AppEditor } from './AppEditor';
 import { CuratedListEditor } from './CuratedListEditor';
 import { NewsEditor } from './NewsEditor';
+import { UserEditor } from './UserEditor';
 import { Breadcrumbs } from './Breadcrumbs';
 
 interface NewsItem {
@@ -139,7 +140,7 @@ export function AdminDashboard({
   const [isCreatingApp, setIsCreatingApp] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [userSearchTerm, setUserSearchTerm] = useState('');
-  
+
   // Sorting state
   const [appSortField, setAppSortField] = useState<'name' | 'category' | 'owner' | null>(null);
   const [appSortDirection, setAppSortDirection] = useState<'asc' | 'desc'>('asc');
@@ -148,7 +149,7 @@ export function AdminDashboard({
   const [newsSortField, setNewsSortField] = useState<'title' | 'category' | 'date' | null>(null);
   const [newsSortDirection, setNewsSortDirection] = useState<'asc' | 'desc'>('asc');
 
-  const filteredApps = applications.filter(app => 
+  const filteredApps = applications.filter(app =>
     app.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     app.category.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -174,6 +175,12 @@ export function AdminDashboard({
     onUpdateNews(news);
     setEditingNews(null);
     setIsCreatingNews(false);
+  };
+
+  const handleSaveUser = (userId: string, updates: Partial<UserAccount>) => {
+    // In a real application, this would call an API to update the user
+    console.log('Updating user', userId, 'with', updates);
+    setEditingUser(null);
   };
 
   const formatTimeAgo = (date: Date) => {
@@ -220,7 +227,7 @@ export function AdminDashboard({
   // Apply sorting to filtered arrays
   const sortedApps = [...filteredApps].sort((a, b) => {
     if (!appSortField) return 0;
-    
+
     let aValue, bValue;
     if (appSortField === 'name') {
       aValue = a.name.toLowerCase();
@@ -232,7 +239,7 @@ export function AdminDashboard({
       aValue = a.metadata.owner.toLowerCase();
       bValue = b.metadata.owner.toLowerCase();
     }
-    
+
     if (aValue < bValue) return appSortDirection === 'asc' ? -1 : 1;
     if (aValue > bValue) return appSortDirection === 'asc' ? 1 : -1;
     return 0;
@@ -240,7 +247,7 @@ export function AdminDashboard({
 
   const sortedUsers = [...filteredUsers].sort((a, b) => {
     if (!userSortField) return 0;
-    
+
     let aValue, bValue;
     if (userSortField === 'name') {
       aValue = a.name.toLowerCase();
@@ -255,11 +262,11 @@ export function AdminDashboard({
       aValue = a.status;
       bValue = b.status;
     } else {
-      return userSortDirection === 'asc' ? 
+      return userSortDirection === 'asc' ?
         a.lastLogin.getTime() - b.lastLogin.getTime() :
         b.lastLogin.getTime() - a.lastLogin.getTime();
     }
-    
+
     if (aValue < bValue) return userSortDirection === 'asc' ? -1 : 1;
     if (aValue > bValue) return userSortDirection === 'asc' ? 1 : -1;
     return 0;
@@ -267,7 +274,7 @@ export function AdminDashboard({
 
   const sortedNews = [...news].sort((a, b) => {
     if (!newsSortField) return 0;
-    
+
     let aValue, bValue;
     if (newsSortField === 'title') {
       aValue = a.title.toLowerCase();
@@ -279,7 +286,7 @@ export function AdminDashboard({
       aValue = a.date;
       bValue = b.date;
     }
-    
+
     if (aValue < bValue) return newsSortDirection === 'asc' ? -1 : 1;
     if (aValue > bValue) return newsSortDirection === 'asc' ? 1 : -1;
     return 0;
@@ -290,7 +297,7 @@ export function AdminDashboard({
     if (field !== activeField) {
       return <ArrowUpDown className="w-3 h-3 text-gray-400" strokeWidth={2} />;
     }
-    return direction === 'asc' ? 
+    return direction === 'asc' ?
       <ArrowUp className="w-3 h-3 text-[#18A1CD]" strokeWidth={2} /> :
       <ArrowDown className="w-3 h-3 text-[#18A1CD]" strokeWidth={2} />;
   };
@@ -298,12 +305,12 @@ export function AdminDashboard({
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Admin Header */}
-      <div className="bg-gradient-to-r from-[#052049] to-[#18A1CD] text-white">
+      <div className="bg-gradient-to-r from-[#052049] to-[#18A1CD] text-black">
         <div className="max-w-7xl mx-auto px-4 md:px-8 py-6">
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-3xl font-bold mb-2">Admin Dashboard</h1>
-              <p className="text-white/80">Manage users, applications, and monitor portal analytics</p>
+              <p className="text-black/80">Manage users, applications, and monitor portal analytics</p>
             </div>
           </div>
         </div>
@@ -319,55 +326,50 @@ export function AdminDashboard({
         <div className="flex items-center gap-2 mb-6 overflow-x-auto">
           <button
             onClick={() => setActiveTab('analytics')}
-            className={`flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all whitespace-nowrap ${
-              activeTab === 'analytics'
-                ? 'bg-white border-2 border-[#18A1CD] text-[#052049] shadow-md'
-                : 'bg-white border-2 border-gray-200 text-gray-600 hover:border-gray-300'
-            }`}
+            className={`flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all whitespace-nowrap ${activeTab === 'analytics'
+              ? 'bg-white border-2 border-[#18A1CD] text-[#052049] shadow-md'
+              : 'bg-white border-2 border-gray-200 text-gray-600 hover:border-gray-300'
+              }`}
           >
             <BarChart3 className="w-4 h-4" strokeWidth={2} />
             Analytics
           </button>
           <button
             onClick={() => setActiveTab('users')}
-            className={`flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all whitespace-nowrap ${
-              activeTab === 'users'
-                ? 'bg-white border-2 border-[#18A1CD] text-[#052049] shadow-md'
-                : 'bg-white border-2 border-gray-200 text-gray-600 hover:border-gray-300'
-            }`}
+            className={`flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all whitespace-nowrap ${activeTab === 'users'
+              ? 'bg-white border-2 border-[#18A1CD] text-[#052049] shadow-md'
+              : 'bg-white border-2 border-gray-200 text-gray-600 hover:border-gray-300'
+              }`}
           >
             <Users className="w-4 h-4" strokeWidth={2} />
             Users ({mockUsers.length})
           </button>
           <button
             onClick={() => setActiveTab('apps')}
-            className={`flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all whitespace-nowrap ${
-              activeTab === 'apps'
-                ? 'bg-white border-2 border-[#18A1CD] text-[#052049] shadow-md'
-                : 'bg-white border-2 border-gray-200 text-gray-600 hover:border-gray-300'
-            }`}
+            className={`flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all whitespace-nowrap ${activeTab === 'apps'
+              ? 'bg-white border-2 border-[#18A1CD] text-[#052049] shadow-md'
+              : 'bg-white border-2 border-gray-200 text-gray-600 hover:border-gray-300'
+              }`}
           >
             <List className="w-4 h-4" strokeWidth={2} />
             Applications ({applications.length})
           </button>
           <button
             onClick={() => setActiveTab('bundles')}
-            className={`flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all whitespace-nowrap ${
-              activeTab === 'bundles'
-                ? 'bg-white border-2 border-[#18A1CD] text-[#052049] shadow-md'
-                : 'bg-white border-2 border-gray-200 text-gray-600 hover:border-gray-300'
-            }`}
+            className={`flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all whitespace-nowrap ${activeTab === 'bundles'
+              ? 'bg-white border-2 border-[#18A1CD] text-[#052049] shadow-md'
+              : 'bg-white border-2 border-gray-200 text-gray-600 hover:border-gray-300'
+              }`}
           >
             <Package className="w-4 h-4" strokeWidth={2} />
             App Bundles ({bundles.length})
           </button>
           <button
             onClick={() => setActiveTab('news')}
-            className={`flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all whitespace-nowrap ${
-              activeTab === 'news'
-                ? 'bg-white border-2 border-[#18A1CD] text-[#052049] shadow-md'
-                : 'bg-white border-2 border-gray-200 text-gray-600 hover:border-gray-300'
-            }`}
+            className={`flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all whitespace-nowrap ${activeTab === 'news'
+              ? 'bg-white border-2 border-[#18A1CD] text-[#052049] shadow-md'
+              : 'bg-white border-2 border-gray-200 text-gray-600 hover:border-gray-300'
+              }`}
           >
             <Newspaper className="w-4 h-4" strokeWidth={2} />
             News ({news.length})
@@ -458,12 +460,6 @@ export function AdminDashboard({
                         <span className="font-semibold text-gray-900">{item.app}</span>
                       </div>
                       <div className="flex items-center gap-3">
-                        <div className="bg-gray-100 rounded-full h-2 w-32">
-                          <div
-                            className="bg-gradient-to-r from-[#052049] to-[#18A1CD] h-2 rounded-full"
-                            style={{ width: `${(item.count / mockUsageStats.mostAccessedApps[0].count) * 100}%` }}
-                          ></div>
-                        </div>
                         <span className="text-sm font-semibold text-gray-600 w-16 text-right">{item.count.toLocaleString()}</span>
                       </div>
                     </div>
@@ -523,13 +519,12 @@ export function AdminDashboard({
                     <div className="flex-1">
                       <p className="font-semibold text-gray-900 text-sm">{item.title}</p>
                       <div className="flex items-center gap-2 mt-1">
-                        <span className={`px-2 py-0.5 text-xs font-semibold rounded-full ${
-                          item.category === 'Security' ? 'bg-red-100 text-red-700' :
+                        <span className={`px-2 py-0.5 text-xs font-semibold rounded-full ${item.category === 'Security' ? 'bg-red-100 text-red-700' :
                           item.category === 'Announcement' ? 'bg-blue-100 text-blue-700' :
-                          item.category === 'Policy' ? 'bg-purple-100 text-purple-700' :
-                          item.category === 'Update' ? 'bg-teal-100 text-teal-700' :
-                          'bg-gray-100 text-gray-700'
-                        }`}>
+                            item.category === 'Policy' ? 'bg-purple-100 text-purple-700' :
+                              item.category === 'Update' ? 'bg-teal-100 text-teal-700' :
+                                'bg-gray-100 text-gray-700'
+                          }`}>
                           {item.category}
                         </span>
                         <span className="text-xs text-gray-500">{item.date}</span>
@@ -592,15 +587,6 @@ export function AdminDashboard({
                     </th>
                     <th className="px-6 py-4 text-left">
                       <button
-                        onClick={() => handleUserSort('department')}
-                        className="flex items-center gap-2 text-xs font-bold text-gray-600 uppercase tracking-wider hover:text-[#18A1CD] transition-colors"
-                      >
-                        Department
-                        <SortIcon field="department" activeField={userSortField} direction={userSortDirection} />
-                      </button>
-                    </th>
-                    <th className="px-6 py-4 text-left">
-                      <button
                         onClick={() => handleUserSort('role')}
                         className="flex items-center gap-2 text-xs font-bold text-gray-600 uppercase tracking-wider hover:text-[#18A1CD] transition-colors"
                       >
@@ -636,7 +622,7 @@ export function AdminDashboard({
                     <tr key={user.id} className="hover:bg-gray-50 transition-colors">
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-indigo-500 flex items-center justify-center text-white font-bold">
+                          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-indigo-500 flex items-center justify-center text-black font-bold">
                             {user.name.split(' ').map(n => n[0]).join('')}
                           </div>
                           <div>
@@ -646,30 +632,21 @@ export function AdminDashboard({
                         </div>
                       </td>
                       <td className="px-6 py-4">
-                        <div className="flex items-center gap-2 text-sm text-gray-700">
-                          <Building className="w-4 h-4 text-gray-400" />
-                          {user.department}
-                        </div>
-                      </td>
-                      <td className="px-6 py-4">
-                        <span className={`inline-flex items-center gap-1 px-3 py-1 text-sm font-semibold rounded-lg ${
-                          user.role === 'admin'
-                            ? 'bg-purple-100 text-purple-700'
-                            : 'bg-gray-100 text-gray-700'
-                        }`}>
+                        <span className={`inline-flex items-center gap-1 px-3 py-1 text-sm font-semibold rounded-lg ${user.role === 'admin'
+                          ? 'bg-purple-100 text-purple-700'
+                          : 'bg-gray-100 text-gray-700'
+                          }`}>
                           <Shield className="w-3 h-3" strokeWidth={2} />
                           {user.role.charAt(0).toUpperCase() + user.role.slice(1)}
                         </span>
                       </td>
                       <td className="px-6 py-4">
-                        <span className={`inline-flex items-center gap-1 px-3 py-1 text-sm font-semibold rounded-lg ${
-                          user.status === 'active'
-                            ? 'bg-green-100 text-green-700'
-                            : 'bg-gray-100 text-gray-500'
-                        }`}>
-                          <div className={`w-2 h-2 rounded-full ${
-                            user.status === 'active' ? 'bg-green-500' : 'bg-gray-400'
-                          }`}></div>
+                        <span className={`inline-flex items-center gap-1 px-3 py-1 text-sm font-semibold rounded-lg ${user.status === 'active'
+                          ? 'bg-green-100 text-green-700'
+                          : 'bg-gray-100 text-gray-500'
+                          }`}>
+                          <div className={`w-2 h-2 rounded-full ${user.status === 'active' ? 'bg-green-500' : 'bg-gray-400'
+                            }`}></div>
                           {user.status.charAt(0).toUpperCase() + user.status.slice(1)}
                         </span>
                       </td>
@@ -680,7 +657,7 @@ export function AdminDashboard({
                       <td className="px-6 py-4 text-right">
                         <button
                           onClick={() => setEditingUser(user)}
-                          className="inline-flex items-center gap-2 px-4 py-2 bg-[#052049] text-white rounded-lg hover:bg-[#041938] transition-colors"
+                          className="inline-flex items-center gap-2 px-4 py-2 text-white rounded-lg transition-colors"
                         >
                           <Edit className="w-4 h-4" strokeWidth={2} />
                           Edit
@@ -701,7 +678,7 @@ export function AdminDashboard({
             <div className="p-6 border-b border-gray-200">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-xl font-bold text-[#052049]">Application Management</h2>
-                <button 
+                <button
                   onClick={() => setIsCreatingApp(true)}
                   className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#052049] to-[#18A1CD] text-white font-semibold rounded-xl hover:shadow-lg transition-all"
                 >
@@ -797,7 +774,7 @@ export function AdminDashboard({
                       <td className="px-6 py-4 text-right">
                         <button
                           onClick={() => setEditingApp(app)}
-                          className="inline-flex items-center gap-2 px-4 py-2 bg-[#052049] text-white rounded-lg hover:bg-[#041938] transition-colors"
+                          className="inline-flex items-center gap-2 px-4 py-2  text-white rounded-lg transition-colors"
                         >
                           <Edit className="w-4 h-4" strokeWidth={2} />
                           Edit
@@ -834,7 +811,7 @@ export function AdminDashboard({
                   className="bg-white rounded-2xl p-6 border-2 border-gray-200 hover:border-[#18A1CD] transition-all"
                 >
                   <div className="flex items-start justify-between mb-4">
-                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center bg-gradient-to-br ${bundle.color} text-white`}>
+                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center bg-gradient-to-br ${bundle.color} text-black`}>
                       {bundle.icon && <bundle.icon className="w-6 h-6" strokeWidth={2} />}
                     </div>
                     <div className="flex gap-2">
@@ -923,9 +900,8 @@ export function AdminDashboard({
                       <td className="px-6 py-4">
                         <div className="flex flex-col gap-1">
                           {item.source && (
-                            <span className={`text-xs font-semibold ${
-                              item.source === 'external' ? 'text-blue-600' : 'text-green-600'
-                            }`}>
+                            <span className={`text-xs font-semibold ${item.source === 'external' ? 'text-blue-600' : 'text-green-600'
+                              }`}>
                               {item.source === 'external' ? '⊕ External' : '⊙ Internal'}
                             </span>
                           )}
@@ -941,7 +917,7 @@ export function AdminDashboard({
                         <div className="flex gap-2 justify-end">
                           <button
                             onClick={() => setEditingNews(item)}
-                            className="inline-flex items-center gap-2 px-4 py-2 bg-[#052049] text-white rounded-lg hover:bg-[#041938] transition-colors"
+                            className="inline-flex items-center gap-2 px-4 py-2 text-black rounded-lg hover:bg-[#041938] transition-colors"
                           >
                             <Edit className="w-4 h-4" strokeWidth={2} />
                             Edit
@@ -996,6 +972,14 @@ export function AdminDashboard({
             setEditingNews(null);
             setIsCreatingNews(false);
           }}
+        />
+      )}
+
+      {editingUser && (
+        <UserEditor
+          user={editingUser}
+          onSave={handleSaveUser}
+          onClose={() => setEditingUser(null)}
         />
       )}
     </div>

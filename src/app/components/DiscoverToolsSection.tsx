@@ -42,15 +42,15 @@ export function DiscoverToolsSection({
                         <button
                             key={bundle.id}
                             onClick={() => onBundleClick(bundle)}
-                            className={`group w-full rounded-2xl p-5 border border-transparent transition-all duration-300 hover:shadow-2xl hover:shadow-gray-900/10 text-left bg-gradient-to-br ${bundle.gradient} hover:border-gray-200/80 hover:-translate-y-1`}
+                            className={`group w-full rounded-2xl p-5 border transition-all duration-300 hover:shadow-2xl  text-left bg-gradient-to-br ${bundle.gradient} hover:border-gray-200/80 `}
                         >
                             <div
-                                className={`w-12 h-12 rounded-2xl flex items-center justify-center shadow-lg bg-gradient-to-br ${bundle.color} text-white mb-4 group-hover:scale-110 transition-transform duration-300`}
+                                className={`w-12 h-12 rounded-2xl flex items-center justify-center shadow-lg bg-gray-50 ${bundle.color} text-black mb-4  transition-transform duration-300 border-1 border-gray-200`}
                             >
                                 <Icon className="w-6 h-6" strokeWidth={2} />
                             </div>
 
-                            <h3 className="font-bold text-[15px] text-[#052049] mb-2 group-hover:text-[#18A1CD] transition-colors tracking-tight leading-snug">
+                            <h3 className="font-bold text-[15px] text-black mb-2  transition-colors tracking-tight leading-snug">
                                 {bundle.title}
                             </h3>
 
@@ -69,7 +69,7 @@ export function DiscoverToolsSection({
                                     </span>
                                 </div>
                                 <ChevronRight
-                                    className="w-4 h-4 text-gray-400 group-hover:text-[#18A1CD] group-hover:translate-x-1 transition-all duration-300"
+                                    className="w-4 h-4 text-gray-400 transition-all duration-300"
                                     strokeWidth={2.5}
                                 />
                             </div>

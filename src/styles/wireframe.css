@@ -1,0 +1,241 @@
+/* Wireframe Mode - Remove all colors, shadows, and hover effects */
+
+/* Completely disable Tailwind's shadow system */
+:root {
+  --tw-shadow: 0 0 #0000 !important;
+  --tw-shadow-colored: 0 0 #0000 !important;
+  --tw-ring-shadow: 0 0 #0000 !important;
+  --tw-ring-offset-shadow: 0 0 #0000 !important;
+  --tw-ring-width: 0px !important;
+  --tw-ring-offset-width: 0px !important;
+  --tw-ring-color: transparent !important;
+  --tw-ring-offset-color: transparent !important;
+}
+
+/* Force greyscale on everything */
+* {
+  /* Remove all shadows */
+  box-shadow: none !important;
+  text-shadow: none !important;
+
+  /* Remove transitions for hover effects */
+  transition: none !important;
+
+  /* Remove filters that might add color */
+  filter: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+
+  /* Remove outlines and rings */
+  outline: none !important;
+  outline-width: 0 !important;
+  outline-color: transparent !important;
+}
+
+/* Remove all ring utilities */
+*[class*="ring"] {
+  --tw-ring-width: 0px !important;
+  --tw-ring-offset-width: 0px !important;
+  --tw-ring-color: transparent !important;
+  --tw-ring-offset-color: transparent !important;
+  --tw-ring-shadow: none !important;
+  --tw-ring-inset: none !important;
+  box-shadow: none !important;
+}
+
+/* SVG specific - no outlines */
+svg {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Button and interactive elements - no outlines */
+button,
+a,
+[role="button"],
+[tabindex] {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Image containers - remove rings */
+img {
+  box-shadow: none !important;
+}
+
+/* Specifically target common ring classes */
+.ring-2,
+.ring-gray-200,
+[class*="ring-gray"] {
+  box-shadow: none !important;
+  --tw-ring-width: 0px !important;
+}
+
+/* Force greyscale on the entire page */
+html {
+  filter: grayscale(100%) !important;
+}
+
+/* Override all color variables to greyscale */
+:root {
+  --background: #ffffff !important;
+  --foreground: #1a1a1a !important;
+  --card: #ffffff !important;
+  --card-foreground: #1a1a1a !important;
+  --popover: #ffffff !important;
+  --popover-foreground: #1a1a1a !important;
+  --primary: #1a1a1a !important;
+  --primary-foreground: #ffffff !important;
+  --secondary: #e5e5e5 !important;
+  --secondary-foreground: #1a1a1a !important;
+  --muted: #f5f5f5 !important;
+  --muted-foreground: #666666 !important;
+  --accent: #e5e5e5 !important;
+  --accent-foreground: #1a1a1a !important;
+  --destructive: #666666 !important;
+  --destructive-foreground: #ffffff !important;
+  --border: #cccccc !important;
+  --input: #e5e5e5 !important;
+  --input-background: #f5f5f5 !important;
+  --switch-background: #cccccc !important;
+  --ring: #999999 !important;
+  --chart-1: #666666 !important;
+  --chart-2: #888888 !important;
+  --chart-3: #aaaaaa !important;
+  --chart-4: #cccccc !important;
+  --chart-5: #dddddd !important;
+  --sidebar: #f5f5f5 !important;
+  --sidebar-foreground: #1a1a1a !important;
+  --sidebar-primary: #1a1a1a !important;
+  --sidebar-primary-foreground: #f5f5f5 !important;
+  --sidebar-accent: #e5e5e5 !important;
+  --sidebar-accent-foreground: #1a1a1a !important;
+  --sidebar-border: #cccccc !important;
+  --sidebar-ring: #999999 !important;
+}
+
+/* Dark mode overrides (also greyscale) */
+.dark {
+  --background: #1a1a1a !important;
+  --foreground: #f5f5f5 !important;
+  --card: #262626 !important;
+  --card-foreground: #f5f5f5 !important;
+  --popover: #262626 !important;
+  --popover-foreground: #f5f5f5 !important;
+  --primary: #f5f5f5 !important;
+  --primary-foreground: #1a1a1a !important;
+  --secondary: #404040 !important;
+  --secondary-foreground: #f5f5f5 !important;
+  --muted: #333333 !important;
+  --muted-foreground: #999999 !important;
+  --accent: #404040 !important;
+  --accent-foreground: #f5f5f5 !important;
+  --destructive: #808080 !important;
+  --destructive-foreground: #f5f5f5 !important;
+  --border: #4d4d4d !important;
+  --input: #333333 !important;
+  --ring: #666666 !important;
+}
+
+/* Remove all gradients - make backgrounds solid */
+[class*="bg-gradient"],
+[class*="from-"],
+[class*="to-"],
+[class*="via-"] {
+  background: #f5f5f5 !important;
+  background-image: none !important;
+}
+
+/* Remove gradient text coloring */
+.bg-clip-text {
+  -webkit-background-clip: unset !important;
+  background-clip: unset !important;
+  -webkit-text-fill-color: #1a1a1a !important;
+  color: #1a1a1a !important;
+  background: transparent !important;
+}
+
+/* Remove all hover state effects */
+*:hover {
+  transform: none !important;
+  box-shadow: none !important;
+  /* background-color: inherit; */
+}
+
+/* Force simple borders */
+[class*="border"] {
+  border-color: #cccccc !important;
+}
+
+/* Remove colored badges - make them simple grey */
+[class*="badge"],
+.badge,
+span[class*="bg-"] {
+  background: #e5e5e5 !important;
+  color: #1a1a1a !important;
+}
+
+/* Remove colored buttons */
+button,
+[role="button"],
+a[class*="bg-"] {
+  background: transparent !important;
+  color: #1a1a1a !important;
+  border-color: #cccccc !important;
+}
+
+/* Primary/active buttons slightly darker */
+button[class*="primary"],
+.btn-primary {
+  background: #1a1a1a !important;
+  color: #ffffff !important;
+}
+
+/* Remove colored icons - inherit text color */
+svg {
+  color: inherit !important;
+}
+
+/* Remove animated elements */
+[class*="animate-"],
+[class*="animation-"] {
+  animation: none !important;
+}
+
+/* Remove blur effects */
+[class*="blur"] {
+  filter: none !important;
+  backdrop-filter: none !important;
+}
+
+/* Simple card styling */
+[class*="card"],
+[class*="rounded-xl"],
+[class*="rounded-lg"] {
+  background: #ffffff !important;
+  border: 1px solid #cccccc !important;
+}
+
+/* Override specific UCSF brand colors */
+.text-\[\#052049\],
+.text-\[\#18A1CD\] {
+  color: #1a1a1a !important;
+}
+
+.bg-\[\#052049\],
+.bg-\[\#18A1CD\] {
+  background-color: #666666 !important;
+}
+
+/* Remove ring focus effects */
+*:focus,
+*:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Remove decorative elements */
+.absolute.inset-0[class*="bg-gradient"],
+.absolute[class*="blur"] {
+  display: none !important;
+}

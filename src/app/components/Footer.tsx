@@ -2,7 +2,7 @@ import { UCSFBranding } from './UCSFBranding';
 
 export function Footer() {
   return (
-    <footer role="contentinfo" className="bg-[#052049] text-white mt-auto">
+    <footer role="contentinfo" className="bg-black/80 text-white mt-auto">
       <div className="max-w-7xl mx-auto px-4 md:px-10 py-8 md:py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* UCSF Logo and Address */}

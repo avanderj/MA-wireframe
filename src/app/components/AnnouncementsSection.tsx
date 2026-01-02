@@ -37,7 +37,7 @@ export function AnnouncementsSection({
                             }`}
                     >
                         {announcement.urgent && (
-                            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-gradient-to-r from-red-500 to-orange-500 text-white text-[10px] font-bold rounded-full mb-3 shadow-sm">
+                            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-gradient-to-r from-red-500 to-orange-500 text-black text-[10px] font-bold rounded-full mb-3 shadow-sm">
                                 <AlertTriangle className="w-3 h-3" strokeWidth={2.5} />
                                 URGENT
                             </div>

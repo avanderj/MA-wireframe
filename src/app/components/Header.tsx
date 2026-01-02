@@ -33,7 +33,7 @@ export function Header({
     return (
         <header
             role="banner"
-            className="bg-white/80 backdrop-blur-xl border-b border-gray-100/60 sticky top-0 z-30"
+            className="bg-white backdrop-blur-xl border-b border-gray-100/60 sticky top-0 z-30"
         >
             <div className="px-4 md:px-10 py-5">
                 <div className="flex items-center justify-between">
@@ -59,8 +59,8 @@ export function Header({
                             <button
                                 onClick={() => onViewChange("my-apps")}
                                 className={`px-4 py-2.5 rounded-xl transition-all duration-200 flex items-center gap-2.5 focus:outline-none focus:ring-2 focus:ring-[#18A1CD] focus:ring-offset-2 ${activeView === "my-apps"
-                                        ? "bg-gradient-to-r from-[#052049] to-[#18A1CD] text-white shadow-lg shadow-[#052049]/20"
-                                        : "text-gray-700 hover:bg-gray-50/80 hover:text-[#052049]"
+                                    ? "bg-gradient-to-r from-[#052049] to-[#18A1CD] text-white shadow-lg shadow-[#052049]/20"
+                                    : "text-gray-700 hover:bg-gray-50/80 hover:text-[#052049]"
                                     }`}
                                 aria-current={activeView === "my-apps" ? "page" : undefined}
                                 aria-label="Home page"
@@ -77,8 +77,8 @@ export function Header({
                             <button
                                 onClick={() => onViewChange("app-library")}
                                 className={`px-4 py-2.5 rounded-xl transition-all duration-200 flex items-center gap-2.5 focus:outline-none focus:ring-2 focus:ring-[#18A1CD] focus:ring-offset-2 ${activeView === "app-library" || activeView === "bundle-detail"
-                                        ? "bg-gradient-to-r from-[#052049] to-[#18A1CD] text-white shadow-lg shadow-[#052049]/20"
-                                        : "text-gray-700 hover:bg-gray-50/80 hover:text-[#052049]"
+                                    ? "bg-gradient-to-r from-[#052049] to-[#18A1CD] text-white shadow-lg shadow-[#052049]/20"
+                                    : "text-gray-700 hover:bg-gray-50/80 hover:text-[#052049]"
                                     }`}
                                 aria-current={
                                     activeView === "app-library" || activeView === "bundle-detail"
@@ -99,8 +99,8 @@ export function Header({
                             <button
                                 onClick={() => onViewChange("news")}
                                 className={`px-4 py-2.5 rounded-xl transition-all duration-200 flex items-center gap-2.5 focus:outline-none focus:ring-2 focus:ring-[#18A1CD] focus:ring-offset-2 ${activeView === "news"
-                                        ? "bg-gradient-to-r from-[#052049] to-[#18A1CD] text-white shadow-lg shadow-[#052049]/20"
-                                        : "text-gray-700 hover:bg-gray-50/80 hover:text-[#052049]"
+                                    ? "bg-gradient-to-r from-[#052049] to-[#18A1CD] text-white shadow-lg shadow-[#052049]/20"
+                                    : "text-gray-700 hover:bg-gray-50/80 hover:text-[#052049]"
                                     }`}
                                 aria-current={activeView === "news" ? "page" : undefined}
                                 aria-label="News page"
@@ -118,7 +118,6 @@ export function Header({
 
                         {/* Desktop Global Search Bar */}
                         <div className="hidden xl:flex items-center gap-4 ml-6">
-                            <div className="w-px h-8 bg-gray-200/60" aria-hidden="true"></div>
                             <button
                                 onClick={onSearchClick}
                                 className="flex items-center gap-3 bg-gray-50/50 rounded-xl px-4 py-2.5 border border-gray-200/60 hover:border-gray-300/80 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#18A1CD] focus:ring-offset-2 w-96"
@@ -295,7 +294,7 @@ export function Header({
                             aria-label="Open profile menu for Chris Garcia"
                         >
                             <div
-                                className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#052049] to-[#18A1CD] flex items-center justify-center font-bold text-[13px] shadow-lg shadow-[#052049]/20 text-white"
+                                className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#052049] to-[#18A1CD] flex items-center justify-center font-bold text-[13px] shadow-lg shadow-[#052049]/20 text-black"
                                 aria-hidden="true"
                             >
                                 CG
@@ -328,8 +327,8 @@ export function Header({
                                 setIsMobileMenuOpen(false);
                             }}
                             className={`w-full px-4 py-3 rounded-xl transition-all duration-200 flex items-center gap-3 ${activeView === "my-apps"
-                                    ? "bg-gradient-to-r from-[#052049] to-[#18A1CD] text-white"
-                                    : "text-gray-700 hover:bg-gray-50"
+                                ? "bg-gradient-to-r from-[#052049] to-[#18A1CD] text-white"
+                                : "text-gray-700 hover:bg-gray-50"
                                 }`}
                         >
                             <Home className="w-5 h-5" strokeWidth={2.5} />
@@ -341,8 +340,8 @@ export function Header({
                                 setIsMobileMenuOpen(false);
                             }}
                             className={`w-full px-4 py-3 rounded-xl transition-all duration-200 flex items-center gap-3 ${activeView === "app-library" || activeView === "bundle-detail"
-                                    ? "bg-gradient-to-r from-[#052049] to-[#18A1CD] text-white"
-                                    : "text-gray-700 hover:bg-gray-50"
+                                ? "bg-gradient-to-r from-[#052049] to-[#18A1CD] text-white"
+                                : "text-gray-700 hover:bg-gray-50"
                                 }`}
                         >
                             <Library className="w-5 h-5" strokeWidth={2.5} />
@@ -354,8 +353,8 @@ export function Header({
                                 setIsMobileMenuOpen(false);
                             }}
                             className={`w-full px-4 py-3 rounded-xl transition-all duration-200 flex items-center gap-3 ${activeView === "news"
-                                    ? "bg-gradient-to-r from-[#052049] to-[#18A1CD] text-white"
-                                    : "text-gray-700 hover:bg-gray-50"
+                                ? "bg-gradient-to-r from-[#052049] to-[#18A1CD] text-white"
+                                : "text-gray-700 hover:bg-gray-50"
                                 }`}
                         >
                             <Newspaper className="w-5 h-5" strokeWidth={2.5} />

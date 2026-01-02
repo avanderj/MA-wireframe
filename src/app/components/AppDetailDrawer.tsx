@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import { Application } from "../data/ucsf-applications";
 import { getAppLogo } from "../utils/app-helpers";
-import imgRectangle134 from "../../assets/ece298d0ec2c16f10310d45724b276a6035cb503.png";
+// import imgRectangle134 from "../assets/ece298d0ec2c16f10310d45724b276a6035cb503.png";
 
 type App = Application;
 
@@ -24,7 +24,6 @@ interface AppDetailDrawerProps {
     onLaunch: (app: App) => void;
     onRequestAccess: (app: App) => void;
 }
-
 export function AppDetailDrawer({
     app,
     isOpen,
@@ -251,7 +250,7 @@ export function AppDetailDrawer({
                                         href="#"
                                         className="flex items-center gap-4 p-4 rounded-xl bg-gradient-to-br from-purple-50 to-pink-50 hover:from-purple-100 hover:to-pink-100 transition-all group border border-purple-100 hover:border-[#18A1CD]"
                                     >
-                                        
+
                                         <div className="flex-1">
                                             <div className="font-semibold text-[#052049] group-hover:text-[#18A1CD] transition-colors">
                                                 App Support Contact
