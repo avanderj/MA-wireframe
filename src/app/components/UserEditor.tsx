@@ -145,7 +145,6 @@ export function UserEditor({ user, onSave, onClose }: UserEditorProps) {
                             >
                                 <div className="flex items-center justify-between mb-2">
                                     <div className="flex items-center gap-2">
-                                        <div className="w-3 h-3 rounded-full bg-green-500"></div>
                                         <span className="font-bold text-gray-900">Active</span>
                                     </div>
                                     <div
@@ -173,8 +172,7 @@ export function UserEditor({ user, onSave, onClose }: UserEditorProps) {
                             >
                                 <div className="flex items-center justify-between mb-2">
                                     <div className="flex items-center gap-2">
-                                        <div className="w-3 h-3 rounded-full bg-gray-400"></div>
-                                        <span className="font-bold text-gray-900">Inactive</span>
+                                        <span className="font-bold text-gray-900">Mark User as Inactive</span>
                                     </div>
                                     <div
                                         className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${status === 'inactive'

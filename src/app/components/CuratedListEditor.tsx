@@ -1,4 +1,4 @@
-import { Save, X, Plus, Trash2, GripVertical, Palette, BarChart3, UserCheck, MessagesSquare, DollarSign, ShieldCheck, Package } from 'lucide-react';
+import { Save, X, Plus, Trash2, GripVertical, Palette, BarChart3, UserCheck, MessagesSquare, DollarSign, ShieldCheck, Package, Info, Eye, EyeOff, Check } from 'lucide-react';
 import { useState } from 'react';
 import { Application } from '../data/ucsf-applications';
 import { AppBundle } from './AppBundlesSection';
@@ -7,18 +7,21 @@ interface CuratedListEditorProps {
   bundle: AppBundle | null;
   applications: Application[];
   onSave: (bundle: AppBundle) => void;
+  onDelete: (bundleId: string) => void;
   onClose: () => void;
 }
 
 const ICON_COMPONENTS = {
+  Package,
   Palette,
   BarChart3,
   UserCheck,
   MessagesSquare,
   DollarSign,
-  ShieldCheck,
-  Package
+  ShieldCheck
 };
+
+const ICON_NAMES = Object.keys(ICON_COMPONENTS) as Array<keyof typeof ICON_COMPONENTS>;
 
 const COLOR_OPTIONS = [
   { name: 'Purple/Pink', gradient: 'from-purple-500 to-pink-500', bg: 'from-purple-50 to-pink-50' },
@@ -30,22 +33,25 @@ const COLOR_OPTIONS = [
   { name: 'Violet/Purple', gradient: 'from-violet-500 to-purple-500', bg: 'from-violet-50 to-purple-50' }
 ];
 
-export function CuratedListEditor({ bundle, applications, onSave, onClose }: CuratedListEditorProps) {
+export function CuratedListEditor({ bundle, applications, onSave, onDelete, onClose }: CuratedListEditorProps) {
   const [title, setTitle] = useState(bundle?.title || '');
   const [description, setDescription] = useState(bundle?.description || '');
   const [selectedAppIds, setSelectedAppIds] = useState<number[]>(bundle?.appIds || []);
   const [colorIndex, setColorIndex] = useState(0);
-  const [iconName, setIconName] = useState<keyof typeof ICON_COMPONENTS>('Palette');
+  const [iconName, setIconName] = useState<keyof typeof ICON_COMPONENTS>(
+    (bundle?.iconName as keyof typeof ICON_COMPONENTS) || 'Package'
+  );
   const [searchTerm, setSearchTerm] = useState('');
+  const [status, setStatus] = useState<'active' | 'inactive'>(bundle?.status || 'active');
 
-  const filteredApps = applications.filter(app => 
+  const filteredApps = applications.filter(app =>
     app.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     app.category.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const toggleApp = (appId: number) => {
-    setSelectedAppIds(prev => 
-      prev.includes(appId) 
+    setSelectedAppIds(prev =>
+      prev.includes(appId)
         ? prev.filter(id => id !== appId)
         : [...prev, appId]
     );
@@ -57,15 +63,17 @@ export function CuratedListEditor({ bundle, applications, onSave, onClose }: Cur
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     const newBundle: AppBundle = {
       id: bundle?.id || `custom-${Date.now()}`,
       title,
       description,
       icon: ICON_COMPONENTS[iconName],
+      iconName,
       color: COLOR_OPTIONS[colorIndex].gradient,
       gradient: COLOR_OPTIONS[colorIndex].bg,
-      appIds: selectedAppIds
+      appIds: selectedAppIds,
+      status
     };
 
     onSave(newBundle);
@@ -78,9 +86,20 @@ export function CuratedListEditor({ bundle, applications, onSave, onClose }: Cur
         {/* Header */}
         <div className="bg-gradient-to-r from-[#052049] to-[#18A1CD] text-white p-6 flex items-start justify-between">
           <div>
-            <h2 className="text-2xl font-bold mb-1">
-              {bundle ? 'Edit Curated List' : 'Create Curated List'}
-            </h2>
+            <div className="flex items-center gap-3 mb-1">
+              <h2 className="text-2xl font-bold">
+                {bundle ? 'Edit Curated List' : 'Create Curated List'}
+              </h2>
+              {bundle && (
+                <span className={`px-2.5 py-0.5 rounded-full text-xs font-bold border flex items-center gap-1 ${status === 'active'
+                  ? 'bg-green-500/20 text-white border-green-400/50'
+                  : 'bg-gray-500/20 text-white/90 border-white/30'
+                  }`}>
+                  <div className={`w-1.5 h-1.5 rounded-full ${status === 'active' ? 'bg-green-400' : 'bg-gray-300'}`}></div>
+                  {status === 'active' ? 'Active' : 'Inactive'}
+                </span>
+              )}
+            </div>
             <p className="text-white/80">Bundle applications together for easy discovery</p>
           </div>
           <button
@@ -130,21 +149,24 @@ export function CuratedListEditor({ bundle, applications, onSave, onClose }: Cur
                   Icon
                 </label>
                 <div className="grid grid-cols-4 gap-2">
-                  {(Object.keys(ICON_COMPONENTS) as Array<keyof typeof ICON_COMPONENTS>).map((name) => {
+                  {ICON_NAMES.map((name) => {
                     const IconComponent = ICON_COMPONENTS[name];
+                    const isSelected = iconName === name;
                     return (
                       <button
                         key={name}
                         type="button"
                         onClick={() => setIconName(name)}
-                        className={`p-3 rounded-xl border-2 transition-all flex flex-col items-center gap-2 ${
-                          iconName === name 
-                            ? 'border-[#18A1CD] ring-4 ring-[#18A1CD]/10 bg-[#18A1CD]/5' 
-                            : 'border-gray-200 hover:border-gray-300'
-                        }`}
+                        className={`relative p-3 rounded-xl border-2 transition-all flex flex-col items-center gap-2 ${isSelected
+                          ? 'border-4 border-[#18A1CD] bg-[#18A1CD]/20'
+                          : 'border-gray-200 hover:border-gray-300'
+                          }`}
                       >
-                        <IconComponent className="w-6 h-6 text-gray-700" strokeWidth={2} />
-                        <p className="text-xs font-semibold text-gray-700">{name}</p>
+                        <IconComponent className={`w-6 h-6 ${isSelected ? 'text-[#18A1CD]' : 'text-gray-700'}`} strokeWidth={2} />
+                        <div className="flex flex-col items-center leading-tight">
+                          <p className={`text-xs font-semibold ${isSelected ? 'text-[#18A1CD]' : 'text-gray-700'}`}>{name}</p>
+                          {name === 'Package' && <span className="text-[10px] text-gray-500 pt-0.5">(Default)</span>}
+                        </div>
                       </button>
                     );
                   })}
@@ -161,11 +183,10 @@ export function CuratedListEditor({ bundle, applications, onSave, onClose }: Cur
                       key={index}
                       type="button"
                       onClick={() => setColorIndex(index)}
-                      className={`p-3 rounded-xl border-2 transition-all ${
-                        colorIndex === index 
-                          ? 'border-[#18A1CD] ring-4 ring-[#18A1CD]/10' 
-                          : 'border-gray-200 hover:border-gray-300'
-                      }`}
+                      className={`p-3 rounded-xl border-2 transition-all ${colorIndex === index
+                        ? 'border-[#18A1CD] ring-4 ring-[#18A1CD]/10'
+                        : 'border-gray-200 hover:border-gray-300'
+                        }`}
                     >
                       <div className={`h-8 rounded-lg bg-gradient-to-r ${color.gradient} mb-2`}></div>
                       <p className="text-xs font-semibold text-gray-700">{color.name}</p>
@@ -195,7 +216,14 @@ export function CuratedListEditor({ bundle, applications, onSave, onClose }: Cur
                         >
                           <GripVertical className="w-4 h-4 text-gray-400" strokeWidth={2} />
                           <div className="flex-1 min-w-0">
-                            <p className="text-sm font-semibold text-gray-700 truncate">{app.name}</p>
+                            <div className="flex items-center gap-2 mb-0.5">
+                              <p className="text-sm font-semibold text-gray-700 truncate">{app.name}</p>
+                              {!app.hidden && app.hasAccess ? (
+                                <span className="px-2 py-0.5 rounded-full bg-green-100 text-green-700 text-xs font-bold">Active</span>
+                              ) : (
+                                <span className="px-2 py-0.5 rounded-full bg-gray-100 text-gray-500 text-xs font-bold">Inactive</span>
+                              )}
+                            </div>
                             <p className="text-xs text-gray-500">{app.category}</p>
                           </div>
                           <button
@@ -218,7 +246,7 @@ export function CuratedListEditor({ bundle, applications, onSave, onClose }: Cur
               <label className="block text-sm font-semibold text-gray-700 mb-3">
                 Add Applications
               </label>
-              
+
               {/* Search */}
               <input
                 type="text"
@@ -235,16 +263,15 @@ export function CuratedListEditor({ bundle, applications, onSave, onClose }: Cur
                     key={app.id}
                     type="button"
                     onClick={() => toggleApp(app.id)}
-                    className={`w-full flex items-start gap-3 p-3 rounded-lg border-2 transition-all text-left ${
-                      selectedAppIds.includes(app.id)
-                        ? 'bg-[#18A1CD]/10 border-[#18A1CD]'
-                        : 'bg-white border-gray-200 hover:border-gray-300'
-                    }`}
+                    className={`w-full flex items-start gap-3 p-3 rounded-lg border-2 transition-all text-left ${selectedAppIds.includes(app.id)
+                      ? 'bg-[#18A1CD]/10 border-[#18A1CD]'
+                      : 'bg-white border-gray-200 hover:border-gray-300'
+                      }`}
                   >
                     <input
                       type="checkbox"
                       checked={selectedAppIds.includes(app.id)}
-                      onChange={() => {}}
+                      onChange={() => { }}
                       className="mt-1 w-4 h-4 text-[#18A1CD] border-gray-300 rounded focus:ring-[#18A1CD]"
                     />
                     <div className="flex-1 min-w-0">
@@ -261,6 +288,62 @@ export function CuratedListEditor({ bundle, applications, onSave, onClose }: Cur
               </div>
             </div>
           </div>
+
+          {/* Bundle Actions - Similar to AppEditor */}
+          {bundle && (
+            <div className="border-t border-gray-200 mx-6 pt-6 pb-6">
+              <h3 className="text-sm font-semibold text-gray-700 mb-4">Bundle Actions</h3>
+              <div className="flex flex-col sm:flex-row gap-3">
+                <button
+                  type="button"
+                  onClick={() => {
+                    const newStatus = status === 'active' ? 'inactive' : 'active';
+                    onSave({
+                      ...bundle,
+                      title,
+                      description,
+                      icon: ICON_COMPONENTS[iconName],
+                      iconName,
+                      color: COLOR_OPTIONS[colorIndex].gradient,
+                      gradient: COLOR_OPTIONS[colorIndex].bg,
+                      appIds: selectedAppIds,
+                      status: newStatus
+                    });
+                    onClose();
+                  }}
+                  className="flex items-center justify-center gap-2 px-4 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-xl transition-colors min-w-[180px]"
+                >
+                  {status === 'active' ? (
+                    <>
+                      <EyeOff className="w-4 h-4" strokeWidth={2} />
+                      Mark Bundle as Inactive
+                    </>
+                  ) : (
+                    <>
+                      <Eye className="w-4 h-4" strokeWidth={2} />
+                      Mark Bundle as Active
+                    </>
+                  )}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (confirm('Are you sure you want to delete this bundle? This action cannot be undone.')) {
+                      onDelete(bundle.id);
+                      onClose();
+                    }
+                  }}
+                  className="flex items-center justify-center gap-2 px-4 py-3 bg-red-50 hover:bg-red-100 text-red-700 font-semibold rounded-xl transition-colors min-w-[180px]"
+                >
+                  <Trash2 className="w-4 h-4" strokeWidth={2} />
+                  Delete Bundle
+                </button>
+              </div>
+              <p className="mt-2 text-xs text-gray-500">
+                Inactive bundles won't appear in user views. Deleted bundles are permanently removed.
+              </p>
+            </div>
+          )}
         </form>
 
         {/* Footer */}
@@ -286,7 +369,7 @@ export function CuratedListEditor({ bundle, applications, onSave, onClose }: Cur
             </button>
           </div>
         </div>
-      </div>
-    </div>
+      </div >
+    </div >
   );
 }

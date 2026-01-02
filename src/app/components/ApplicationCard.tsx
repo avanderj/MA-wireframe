@@ -22,8 +22,8 @@ export function ApplicationCard({
         "bg-gray-500/10 text-gray-700 border-gray-200";
 
     return (
-        <article className="bg-white rounded-2xl shadow-sm border-2 border-gray-200 hover:border-[#18A1CD] hover:shadow-xl transition-all duration-300 overflow-hidden group">
-            <div className="p-6">
+        <article className="bg-white rounded-2xl shadow-sm border-2 border-gray-200 hover:border-[#18A1CD] hover:shadow-xl transition-all duration-300 overflow-hidden group flex flex-col h-full">
+            <div className="p-6 flex flex-col flex-1">
                 <div className="flex gap-5 mb-5">
                     <div className="w-16 h-16 flex-shrink-0 rounded-xl bg-white flex items-center justify-center overflow-hidden ring-2 ring-gray-200 shadow-md p-2">
                         {getAppLogo(app) ? (
@@ -58,14 +58,17 @@ export function ApplicationCard({
                             <h3 className="font-bold text-lg text-[#052049] line-clamp-2 leading-snug group-hover:text-[#18A1CD] transition-colors">
                                 {app.name}
                             </h3>
-                            {app.saved && (
-                                <button
-                                    className="flex-shrink-0 text-[#18A1CD] hover:text-teal-600 transition-colors"
-                                    aria-label="Saved"
-                                >
-                                    <Bookmark className="w-5 h-5 fill-current" />
-                                </button>
-                            )}
+                            <button
+                                className={`flex-shrink-0 transition-colors ${app.saved
+                                        ? "text-[#18A1CD] hover:text-teal-600"
+                                        : "text-gray-400 hover:text-[#18A1CD]"
+                                    }`}
+                                aria-label={app.saved ? "Saved" : "Save"}
+                            >
+                                <Bookmark
+                                    className={`w-5 h-5 ${app.saved ? "fill-current" : ""}`}
+                                />
+                            </button>
                         </div>
                         <div className="flex items-center gap-2 mb-2">
                             <span
@@ -102,7 +105,8 @@ export function ApplicationCard({
                     {app.description}
                 </p>
 
-                <div className="flex items-center justify-between pt-5 border-t-2 border-gray-100">
+                {/* Action zone - anchored to bottom */}
+                <div className="flex items-center justify-between pt-5 border-t-2 border-gray-100 mt-auto">
                     <button
                         onClick={() => onGetInfo(app)}
                         className="text-gray-600 hover:text-[#052049] flex items-center gap-2 group/link transition-colors font-medium text-sm"

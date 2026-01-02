@@ -1,4 +1,4 @@
-import { Save, X, Tag, EyeOff, Trash2, Star, Image, Shield, Upload, AlertCircle, FileText, Building2, Package } from 'lucide-react';
+import { Save, X, Tag, EyeOff, Trash2, Star, Image, Shield, Upload, AlertCircle, FileText, Building2, Package, Eye } from 'lucide-react';
 import { useState } from 'react';
 import { Application } from '../data/ucsf-applications';
 
@@ -53,8 +53,8 @@ export function AppEditor({ app, applications, onSave, onClose }: AppEditorProps
   const canBeFeatured = featured || otherFeaturedApps.length < 3;
 
   const handleAuthModeToggle = (mode: string) => {
-    setAuthModes(prev => 
-      prev.includes(mode) 
+    setAuthModes(prev =>
+      prev.includes(mode)
         ? prev.filter(m => m !== mode)
         : [...prev, mode]
     );
@@ -83,20 +83,24 @@ export function AppEditor({ app, applications, onSave, onClose }: AppEditorProps
       metadata: {
         owner,
         version,
-        compliance
+        compliance,
+        lastUpdated: app?.metadata.lastUpdated || new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }),
+        users: app?.metadata.users || '0 active users'
       }
     });
   };
 
-  const handleHide = () => {
-    // Prevent hiding if the app is featured
-    if (app?.featured) {
+  const handleToggleStatus = () => {
+    // Prevent hiding if the app is featured and currently active
+    if (app?.featured && !app.hidden) {
       alert('Cannot hide a featured application. Please remove featured status first.');
       return;
     }
+
+    const newHidden = !app?.hidden;
     onSave(app?.id || 0, {
-      hidden: true,
-      hasAccess: false  // Hidden apps cannot be active
+      hidden: newHidden,
+      hasAccess: !newHidden  // Hidden apps cannot be active
     });
     onClose();
   };
@@ -209,7 +213,7 @@ export function AppEditor({ app, applications, onSave, onClose }: AppEditorProps
               <Image className="w-4 h-4" strokeWidth={2} />
               Thumbnail Image
             </label>
-            
+
             {/* URL Input */}
             <input
               type="text"
@@ -218,7 +222,7 @@ export function AppEditor({ app, applications, onSave, onClose }: AppEditorProps
               className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-[#18A1CD] focus:ring-4 focus:ring-[#18A1CD]/10 transition-all mb-3"
               placeholder="Enter thumbnail URL..."
             />
-            
+
             {/* File Upload */}
             <div className="flex items-center gap-3">
               <label className="flex-1 flex items-center justify-center gap-2 px-4 py-3 border-2 border-dashed border-gray-300 rounded-xl hover:border-[#18A1CD] hover:bg-gray-50 transition-all cursor-pointer">
@@ -234,18 +238,18 @@ export function AppEditor({ app, applications, onSave, onClose }: AppEditorProps
                 />
               </label>
             </div>
-            
+
             <p className="mt-2 text-xs text-gray-500">
               Recommended size: 256x256px or 512x512px (PNG or JPG, max 2MB)
             </p>
-            
+
             {/* Preview */}
             {thumbnailUrl && (
               <div className="mt-3 p-3 bg-gray-50 rounded-lg">
                 <p className="text-xs text-gray-500 mb-2">Preview:</p>
-                <img 
-                  src={thumbnailUrl} 
-                  alt="Thumbnail preview" 
+                <img
+                  src={thumbnailUrl}
+                  alt="Thumbnail preview"
                   className="w-16 h-16 rounded-lg object-cover border border-gray-200"
                   onError={(e) => {
                     (e.target as HTMLImageElement).style.display = 'none';
@@ -263,7 +267,7 @@ export function AppEditor({ app, applications, onSave, onClose }: AppEditorProps
             </label>
             <div className="space-y-2">
               {AUTHENTICATION_MODES.map((mode) => (
-                <label 
+                <label
                   key={mode}
                   className="flex items-center gap-3 p-3 border-2 border-gray-200 rounded-xl hover:border-[#18A1CD] hover:bg-gray-50 transition-all cursor-pointer"
                 >
@@ -288,23 +292,22 @@ export function AppEditor({ app, applications, onSave, onClose }: AppEditorProps
               <Star className="w-4 h-4" strokeWidth={2} />
               Feature Application
             </label>
-            
+
             <button
               type="button"
               onClick={handleFeatureToggle}
               disabled={!canBeFeatured && !featured}
-              className={`w-full px-4 py-3 rounded-xl font-semibold transition-all flex items-center justify-center gap-2 ${
-                featured
-                  ? 'bg-gradient-to-r from-amber-400 to-orange-500 text-white hover:shadow-lg'
-                  : canBeFeatured
+              className={`w-full px-4 py-3 rounded-xl font-semibold transition-all flex items-center justify-center gap-2 ${featured
+                ? 'bg-gradient-to-r from-amber-400 to-orange-500 text-white hover:shadow-lg'
+                : canBeFeatured
                   ? 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                   : 'bg-gray-50 text-gray-400 cursor-not-allowed'
-              }`}
+                }`}
             >
               <Star className={`w-4 h-4 ${featured ? 'fill-white' : ''}`} strokeWidth={2} />
               {featured ? 'Featured Application' : 'Feature This Application'}
             </button>
-            
+
             <div className="mt-3 p-3 bg-blue-50 border border-blue-200 rounded-lg">
               <div className="flex items-start gap-2">
                 <AlertCircle className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" strokeWidth={2} />
@@ -412,11 +415,11 @@ export function AppEditor({ app, applications, onSave, onClose }: AppEditorProps
               <div className="flex flex-col sm:flex-row gap-3">
                 <button
                   type="button"
-                  onClick={handleHide}
+                  onClick={handleToggleStatus}
                   className="flex items-center justify-center gap-2 px-4 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-xl transition-colors"
                 >
-                  <EyeOff className="w-4 h-4" strokeWidth={2} />
-                  Hide Application
+                  {app?.hidden ? <Eye className="w-4 h-4" strokeWidth={2} /> : <EyeOff className="w-4 h-4" strokeWidth={2} />}
+                  {app?.hidden ? 'Mark Application as Active' : 'Mark Application as Inactive'}
                 </button>
                 <button
                   type="button"

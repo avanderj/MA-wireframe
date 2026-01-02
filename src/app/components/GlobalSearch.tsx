@@ -246,7 +246,7 @@ export function GlobalSearch({ isOpen, onClose, applications, onSelectApp }: Glo
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search applications, resources, people, and more..."
+                placeholder="Search applications, resources, and more..."
                 className="flex-1 text-[15px] text-gray-900 placeholder:text-gray-400 focus:outline-none bg-transparent"
                 aria-label="Search UCSF resources"
               />

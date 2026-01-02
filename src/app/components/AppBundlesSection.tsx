@@ -12,7 +12,7 @@ import {
   X,
   Zap,
 } from "lucide-react";
-import imgRectangle134 from "../../assets/ece298d0ec2c16f10310d45724b276a6035cb503.png";
+
 
 interface App {
   id: number;
@@ -31,6 +31,8 @@ export interface AppBundle {
   appIds: number[];
   gradient: string;
   saved?: boolean;
+  status?: 'active' | 'inactive';
+  iconName: string;
 }
 
 export const appBundles: AppBundle[] = [
@@ -43,6 +45,8 @@ export const appBundles: AppBundle[] = [
     color: "from-purple-500 to-pink-500",
     gradient: "from-purple-50 to-pink-50",
     appIds: [13, 3, 17], // Adobe Creative Cloud, Box, OneDrive
+    status: 'active',
+    iconName: 'Palette',
   },
   {
     id: "research-analytics",
@@ -53,6 +57,8 @@ export const appBundles: AppBundle[] = [
     color: "from-blue-500 to-indigo-500",
     gradient: "from-blue-50 to-indigo-50",
     appIds: [9, 22], // Tableau Analytics, Qualtrics
+    status: 'active',
+    iconName: 'BarChart3',
   },
   {
     id: "hr-workforce",
@@ -62,6 +68,8 @@ export const appBundles: AppBundle[] = [
     color: "from-rose-500 to-orange-500",
     gradient: "from-rose-50 to-orange-50",
     appIds: [8, 18, 21], // Workday, Kronos Workforce, PeopleSoft
+    status: 'active',
+    iconName: 'UserCheck',
   },
   {
     id: "collaboration",
@@ -72,6 +80,8 @@ export const appBundles: AppBundle[] = [
     color: "from-cyan-500 to-blue-500",
     gradient: "from-cyan-50 to-blue-50",
     appIds: [5, 14, 10], // Email, Siteimprove, Zoom
+    status: 'active',
+    iconName: 'MessagesSquare',
   },
   {
     id: "finance-procurement",
@@ -81,6 +91,8 @@ export const appBundles: AppBundle[] = [
     color: "from-teal-500 to-emerald-500",
     gradient: "from-teal-50 to-emerald-50",
     appIds: [2, 12], // BearBuy, Concur Expense
+    status: 'inactive',
+    iconName: 'DollarSign',
   },
   {
     id: "security-compliance",
@@ -90,6 +102,7 @@ export const appBundles: AppBundle[] = [
     color: "from-red-500 to-orange-500",
     gradient: "from-red-50 to-orange-50",
     appIds: [1, 15, 19], // Access Management, Okta Identity, CyberArk
+    iconName: 'ShieldCheck',
   },
   {
     id: "productivity",
@@ -99,6 +112,7 @@ export const appBundles: AppBundle[] = [
     color: "from-violet-500 to-purple-500",
     gradient: "from-violet-50 to-purple-50",
     appIds: [6, 16, 11, 20], // Office 365, JIRA, ServiceNow, Smartsheet
+    iconName: 'Boxes',
   },
 ];
 

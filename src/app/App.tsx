@@ -8,6 +8,7 @@ import {
   Package,
   Key,
   ExternalLink,
+  Boxes,
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import {
@@ -15,7 +16,7 @@ import {
   Application,
 } from "./data/ucsf-applications";
 import { ProfileDrawer } from "./components/ProfileDrawer";
-import { AppBundlesSection, AppBundle } from "./components/AppBundlesSection";
+import { AppBundlesSection, AppBundle, appBundles as initialBundles } from "./components/AppBundlesSection";
 import { BundleDetailPage } from "./components/BundleDetailPage";
 import { FeaturedAppsSection } from "./components/FeaturedAppsSection";
 import { Footer } from "./components/Footer";
@@ -35,7 +36,7 @@ import { ActionCenterSection } from "./components/ActionCenterSection";
 import { UnifiedApplicationsSection } from "./components/UnifiedApplicationsSection";
 import { AppDetailDrawer } from "./components/AppDetailDrawer";
 
-type App = (typeof applications)[0];
+type App = Application;
 
 export default function App() {
   const [selectedApp, setSelectedApp] = useState<App | null>(null);
@@ -50,7 +51,7 @@ export default function App() {
 
   // Curated views state
   const [curatedView, setCuratedView] = useState<
-    "all" | "most-popular" | "recently-added" | "ucsf-picks"
+    "all" | "most-popular" | "recently-added" | "ucsf-picks" | "bundles"
   >("all");
 
   // Search state
@@ -87,7 +88,7 @@ export default function App() {
   });
 
   const [appBundles, setAppBundles] = useState<AppBundle[]>(() => {
-    const saved = localStorage.getItem("ucsf-bundles");
+    const saved = localStorage.getItem("ucsf-bundles-v2");
     if (saved) {
       const parsed = JSON.parse(saved);
       // Map icon names back to components
@@ -99,6 +100,7 @@ export default function App() {
         DollarSign,
         ShieldCheck,
         Package,
+        Boxes,
       };
       return parsed.map((bundle: any) => ({
         ...bundle,
@@ -107,55 +109,11 @@ export default function App() {
     }
 
     // Default bundles
-    return [
-      {
-        id: "creative-suite",
-        title: "Creative Suite",
-        description:
-          "Design, video, and creative tools for marketing and communications teams",
-        icon: Palette,
-        color: "from-purple-500 to-pink-500",
-        gradient: "from-purple-50 to-pink-50",
-        appIds: [13, 3, 17],
-        saved: true,
-      },
-      {
-        id: "research-analytics",
-        title: "Research & Analytics",
-        description:
-          "Data analysis, surveys, and research platforms for investigators",
-        icon: BarChart3,
-        color: "from-blue-500 to-indigo-500",
-        gradient: "from-blue-50 to-indigo-50",
-        appIds: [9, 22],
-        saved: false,
-      },
-      {
-        id: "hr-workforce",
-        title: "HR & Workforce",
-        description:
-          "Human resources, payroll, and workforce management systems",
-        icon: UserCheck,
-        color: "from-rose-500 to-orange-500",
-        gradient: "from-rose-50 to-orange-50",
-        appIds: [8, 18, 21],
-      },
-      {
-        id: "collaboration",
-        title: "Communication Hub",
-        description:
-          "Email, messaging, and video conferencing for seamless collaboration",
-        icon: MessagesSquare,
-        color: "from-cyan-500 to-blue-500",
-        gradient: "from-cyan-50 to-blue-50",
-        appIds: [5, 14, 10],
-      },
-    ];
+    return initialBundles;
   });
 
-  // News state
   const [news, setNews] = useState<any[]>(() => {
-    const saved = localStorage.getItem("ucsf-news");
+    const saved = localStorage.getItem("ucsf-news-v2");
     if (saved) {
       const parsedNews = JSON.parse(saved);
       if (parsedNews.length > 0) {
@@ -189,8 +147,6 @@ export default function App() {
         urgent: false,
         source: "internal",
         featured: true,
-        image:
-          "https://images.unsplash.com/photo-1719342399567-4b31027198b6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjYW1wdXMlMjB1bml2ZXJzaXR5JTIwYnVpbGRpbmd8ZW58MXx8fHwxNzY2NDIyODA1fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
         readTime: "2 min read",
       },
       {
@@ -263,28 +219,19 @@ export default function App() {
   }, [applications]);
 
   useEffect(() => {
-    localStorage.setItem("ucsf-news", JSON.stringify(news));
+    localStorage.setItem("ucsf-news-v2", JSON.stringify(news));
   }, [news]);
 
   useEffect(() => {
-    // Store bundles with icon names instead of component references
-    const iconNameMap: Record<string, string> = {
-      [Palette.name]: "Palette",
-      [BarChart3.name]: "BarChart3",
-      [UserCheck.name]: "UserCheck",
-      [MessagesSquare.name]: "MessagesSquare",
-      [DollarSign.name]: "DollarSign",
-      [ShieldCheck.name]: "ShieldCheck",
-      [Package.name]: "Package",
-    };
+    const bundlesToSave = appBundles.map((bundle) => {
+      // Icon name is already stored in bundle.iconName
+      // We just need to remove the icon component which can't be stringified
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { icon, ...rest } = bundle;
+      return rest;
+    });
 
-    const bundlesToSave = appBundles.map((bundle) => ({
-      ...bundle,
-      iconName: iconNameMap[bundle.icon.name] || "Palette",
-      icon: undefined, // Remove the icon component before storing
-    }));
-
-    localStorage.setItem("ucsf-bundles", JSON.stringify(bundlesToSave));
+    localStorage.setItem("ucsf-bundles-v2", JSON.stringify(bundlesToSave));
   }, [appBundles]);
 
   const handleGetInfo = (app: App) => {
@@ -437,7 +384,7 @@ export default function App() {
                     className="group block bg-white rounded-xl p-5 border border-red-200/60 bg-gradient-to-br from-red-50/30 to-orange-50/30 hover:border-red-400/60 transition-all duration-300 hover:shadow-xl hover:shadow-red-900/10 hover:-translate-y-0.5 w-full lg:w-[540px] flex-shrink-0"
                   >
                     <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 flex-shrink-0 flex items-center justify-center text-red-600 group-hover:text-red-700 transition-colors">
+                      <div className="w-12 h-12 flex-shrink-0 flex items-center justify-center text-red-600 border-1 rounded-xl group-hover:text-red-700 transition-colors">
                         <Key className="w-6 h-6" strokeWidth={2} />
                       </div>
                       <div className="flex-1 min-w-0">
@@ -547,7 +494,9 @@ export default function App() {
           </>
         )}
 
-        {activeView === "news" && <NewsPage news={news} />}
+        {activeView === "news" && (
+          <NewsPage news={news} onHomeClick={() => setActiveView("my-apps")} />
+        )}
 
         {activeView === "admin" && isAdmin && (
           <AdminDashboard

@@ -1,4 +1,4 @@
-import { Edit, Plus, Trash2, LogOut, Package, List, Tag, Search, Newspaper, Users, BarChart3, TrendingUp, Activity, UserCheck, Shield, Building, Download, EyeOff, Clock, ArrowUpDown, ArrowUp, ArrowDown } from 'lucide-react';
+import { Edit, Plus, Trash2, LogOut, Package, List, Tag, Search, Newspaper, Users, BarChart3, TrendingUp, Activity, UserCheck, Shield, Building, Download, EyeOff, Clock, ArrowUpDown, ArrowUp, ArrowDown, Library, Boxes, Info } from 'lucide-react';
 import { useState } from 'react';
 import { Application } from '../data/ucsf-applications';
 import { AppBundle } from './AppBundlesSection';
@@ -138,6 +138,7 @@ export function AdminDashboard({
   const [isCreatingBundle, setIsCreatingBundle] = useState(false);
   const [isCreatingNews, setIsCreatingNews] = useState(false);
   const [isCreatingApp, setIsCreatingApp] = useState(false);
+
   const [searchTerm, setSearchTerm] = useState('');
   const [userSearchTerm, setUserSearchTerm] = useState('');
 
@@ -351,7 +352,7 @@ export function AdminDashboard({
               : 'bg-white border-2 border-gray-200 text-gray-600 hover:border-gray-300'
               }`}
           >
-            <List className="w-4 h-4" strokeWidth={2} />
+            <Library className="w-4 h-4" strokeWidth={2} />
             Applications ({applications.length})
           </button>
           <button
@@ -361,7 +362,7 @@ export function AdminDashboard({
               : 'bg-white border-2 border-gray-200 text-gray-600 hover:border-gray-300'
               }`}
           >
-            <Package className="w-4 h-4" strokeWidth={2} />
+            <Boxes className="w-4 h-4" strokeWidth={2} />
             App Bundles ({bundles.length})
           </button>
           <button
@@ -398,7 +399,6 @@ export function AdminDashboard({
                   <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-500 flex items-center justify-center">
                     <Users className="w-6 h-6 text-white" strokeWidth={2} />
                   </div>
-                  <TrendingUp className="w-5 h-5 text-green-500" strokeWidth={2} />
                 </div>
                 <p className="text-sm text-gray-600 mb-1">Total Users</p>
                 <p className="text-3xl font-bold text-[#052049]">{mockUsageStats.totalUsers.toLocaleString()}</p>
@@ -407,38 +407,48 @@ export function AdminDashboard({
 
               <div className="bg-white rounded-2xl p-6 border-2 border-gray-200 shadow-sm">
                 <div className="flex items-center justify-between mb-4">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center">
-                    <Activity className="w-6 h-6 text-white" strokeWidth={2} />
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
+                    <Library className="w-6 h-6 text-white" strokeWidth={2} />
                   </div>
-                  <TrendingUp className="w-5 h-5 text-green-500" strokeWidth={2} />
                 </div>
-                <p className="text-sm text-gray-600 mb-1">Active Users</p>
-                <p className="text-3xl font-bold text-[#052049]">{mockUsageStats.activeUsers.toLocaleString()}</p>
-                <p className="text-xs text-gray-500 mt-2">{((mockUsageStats.activeUsers / mockUsageStats.totalUsers) * 100).toFixed(1)}% active rate</p>
+                <p className="text-sm text-gray-600 mb-1">Applications</p>
+                <p className="text-3xl font-bold text-[#052049]">209</p>
+                <p className="text-xs text-gray-500 mt-2 flex items-center gap-2">
+                  <span className="text-green-600 font-medium">Active</span>
+                  <span className="w-1 h-1 rounded-full bg-gray-300"></span>
+                  <span>15 Inactive</span>
+                </p>
               </div>
 
               <div className="bg-white rounded-2xl p-6 border-2 border-gray-200 shadow-sm">
                 <div className="flex items-center justify-between mb-4">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
-                    <Package className="w-6 h-6 text-white" strokeWidth={2} />
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center">
+                    <Activity className="w-6 h-6 text-white" strokeWidth={2} />
                   </div>
-                  <Activity className="w-5 h-5 text-[#18A1CD]" strokeWidth={2} />
                 </div>
-                <p className="text-sm text-gray-600 mb-1">Applications</p>
-                <p className="text-3xl font-bold text-[#052049]">{mockUsageStats.totalApplications}</p>
-                <p className="text-xs text-gray-500 mt-2">Across all categories</p>
+                <p className="text-sm text-gray-600 mb-1">Avg Apps per User</p>
+                <p className="text-3xl font-bold text-[#052049]">12.4</p>
+                <p className="text-xs text-green-600 mt-2">+1.2 from last quarter</p>
               </div>
 
               <div className="bg-white rounded-2xl p-6 border-2 border-gray-200 shadow-sm">
                 <div className="flex items-center justify-between mb-4">
                   <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center">
-                    <UserCheck className="w-6 h-6 text-white" strokeWidth={2} />
+                    <TrendingUp className="w-6 h-6 text-white" strokeWidth={2} />
                   </div>
-                  <TrendingUp className="w-5 h-5 text-green-500" strokeWidth={2} />
                 </div>
-                <p className="text-sm text-gray-600 mb-1">Total Logins</p>
-                <p className="text-3xl font-bold text-[#052049]">{mockUsageStats.totalLogins.toLocaleString()}</p>
-                <p className="text-xs text-green-600 mt-2">+8% from last week</p>
+                <div className="flex items-center gap-1 mb-1">
+                  <p className="text-sm text-gray-600">App Discovery Rate</p>
+                  <div className="group relative">
+                    <Info className="w-3.5 h-3.5 text-gray-400 hover:text-[#18A1CD] cursor-help" />
+                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 p-2 bg-gray-900 text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10 text-center">
+                      Percentage of portal sessions that result in at least one app click
+                      <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-1 border-4 border-transparent border-t-gray-900"></div>
+                    </div>
+                  </div>
+                </div>
+                <p className="text-3xl font-bold text-[#052049]">68.5%</p>
+                <p className="text-xs text-green-600 mt-2">+4.2% success rate</p>
               </div>
             </div>
 
@@ -476,9 +486,6 @@ export function AdminDashboard({
                 <div className="space-y-3">
                   {mockUsageStats.recentActivity.map((activity, index) => (
                     <div key={index} className="flex items-start gap-3 pb-3 border-b border-gray-100 last:border-0">
-                      <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-50 to-pink-50 flex items-center justify-center flex-shrink-0">
-                        <Activity className="w-4 h-4 text-purple-600" strokeWidth={2} />
-                      </div>
                       <div className="flex-1 min-w-0">
                         <p className="text-sm text-gray-900">
                           <span className="font-semibold">{activity.user}</span>{' '}
@@ -612,6 +619,9 @@ export function AdminDashboard({
                         <SortIcon field="lastLogin" activeField={userSortField} direction={userSortDirection} />
                       </button>
                     </th>
+                    <th className="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">
+                      Activity Log
+                    </th>
                     <th className="px-6 py-4 text-right text-xs font-bold text-gray-600 uppercase tracking-wider">
                       Actions
                     </th>
@@ -653,6 +663,11 @@ export function AdminDashboard({
                       <td className="px-6 py-4">
                         <p className="text-sm text-gray-700">{formatTimeAgo(user.lastLogin)}</p>
                         <p className="text-xs text-gray-500">{user.lastLogin.toLocaleDateString()}</p>
+                      </td>
+                      <td className="px-6 py-4">
+                        <button className="text-sm text-[#18A1CD] font-medium hover:underline flex items-center gap-1">
+                          View Activity
+                        </button>
                       </td>
                       <td className="px-6 py-4 text-right">
                         <button
@@ -759,15 +774,14 @@ export function AdminDashboard({
                         <p className="text-sm text-gray-700">{app.metadata.owner}</p>
                       </td>
                       <td className="px-6 py-4">
-                        <div className="flex flex-col gap-1">
-                          {!app.hidden && app.hasAccess && (
-                            <span className="text-xs text-green-600 font-semibold">✓ Active</span>
-                          )}
+                        <div className="flex flex-col gap-1 items-start">
+                          <span className={`inline-flex items-center gap-1 px-3 py-1 text-sm font-semibold rounded-lg ${!app.hidden && app.hasAccess ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500'
+                            }`}>
+                            <div className={`w-2 h-2 rounded-full ${!app.hidden && app.hasAccess ? 'bg-green-500' : 'bg-gray-400'}`}></div>
+                            {!app.hidden && app.hasAccess ? 'Active' : 'Inactive'}
+                          </span>
                           {app.featured && (app.id === 1 || app.id === 10 || app.id === 11) && (
-                            <span className="text-xs text-amber-600 font-semibold">★ Featured</span>
-                          )}
-                          {app.hidden && (
-                            <span className="text-xs text-gray-500 font-semibold">○ Hidden</span>
+                            <span className="text-xs text-amber-600 font-semibold ml-1">★ Featured</span>
                           )}
                         </div>
                       </td>
@@ -804,8 +818,11 @@ export function AdminDashboard({
               </button>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {bundles.map((bundle) => (
+            <h3 className="text-lg font-bold text-[#052049] mb-4">
+              Active App Bundles ({bundles.filter(b => b.status !== 'inactive').length})
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+              {bundles.filter(b => b.status !== 'inactive').map((bundle) => (
                 <div
                   key={bundle.id}
                   className="bg-white rounded-2xl p-6 border-2 border-gray-200 hover:border-[#18A1CD] transition-all"
@@ -821,27 +838,64 @@ export function AdminDashboard({
                       >
                         <Edit className="w-4 h-4 text-gray-600" strokeWidth={2} />
                       </button>
-                      <button
-                        onClick={() => onDeleteBundle(bundle.id)}
-                        className="p-2 hover:bg-red-50 rounded-lg transition-colors"
-                      >
-                        <Trash2 className="w-4 h-4 text-red-600" strokeWidth={2} />
-                      </button>
                     </div>
                   </div>
                   <h3 className="font-bold text-lg text-[#052049] mb-2">{bundle.title}</h3>
                   <p className="text-sm text-gray-600 mb-4">{bundle.description}</p>
                   <div className="flex items-center justify-between text-sm">
                     <span className="text-gray-500">{bundle.appIds.length} applications</span>
-                    {bundle.saved && bundle.id !== 'research-analytics' && (
-                      <span className="px-2 py-1 bg-green-100 text-green-700 text-xs font-semibold rounded">
-                        Saved
+                    <div className="flex items-center gap-2">
+                      <span className="px-2 py-1 bg-green-100 text-green-700 text-xs font-bold rounded">
+                        Active
                       </span>
-                    )}
+                      {bundle.saved && bundle.id !== 'research-analytics' && (
+                        <span className="px-2 py-1 bg-green-100 text-green-700 text-xs font-semibold rounded">
+                          Saved
+                        </span>
+                      )}
+                    </div>
                   </div>
                 </div>
               ))}
             </div>
+
+            {bundles.some(b => b.status === 'inactive') && (
+              <div>
+                <h3 className="text-lg font-bold text-gray-500 mb-4 flex items-center gap-2">
+                  Hidden / Inactive Bundles ({bundles.filter(b => b.status === 'inactive').length})
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 opacity-75 hover:opacity-100 transition-opacity">
+                  {bundles.filter(b => b.status === 'inactive').map((bundle) => (
+                    <div
+                      key={bundle.id}
+                      className="bg-gray-50 rounded-2xl p-6 border-2 border-gray-200 hover:border-gray-300 transition-all"
+                    >
+                      <div className="flex items-start justify-between mb-4">
+                        <div className={`w-12 h-12 rounded-xl flex items-center justify-center bg-gray-200 text-gray-500 grayscale`}>
+                          {bundle.icon && <bundle.icon className="w-6 h-6" strokeWidth={2} />}
+                        </div>
+                        <div className="flex gap-2">
+                          <button
+                            onClick={() => setEditingBundle(bundle)}
+                            className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                          >
+                            <Edit className="w-4 h-4 text-gray-600" strokeWidth={2} />
+                          </button>
+                        </div>
+                      </div>
+                      <h3 className="font-bold text-lg text-gray-700 mb-2">{bundle.title}</h3>
+                      <p className="text-sm text-gray-500 mb-4">{bundle.description}</p>
+                      <div className="flex items-center justify-between text-sm">
+                        <span className="text-gray-400">{bundle.appIds.length} applications</span>
+                        <span className="px-2 py-1 bg-gray-200 text-gray-600 text-xs font-bold rounded">
+                          Inactive
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         )}
 
@@ -952,11 +1006,14 @@ export function AdminDashboard({
         />
       )}
 
+
+
       {(editingBundle || isCreatingBundle) && (
         <CuratedListEditor
           bundle={editingBundle}
           applications={applications}
           onSave={handleSaveBundle}
+          onDelete={onDeleteBundle}
           onClose={() => {
             setEditingBundle(null);
             setIsCreatingBundle(false);

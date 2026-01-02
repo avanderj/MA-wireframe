@@ -128,7 +128,7 @@ export function Header({
                                     aria-hidden="true"
                                 />
                                 <span className="text-[14px] text-gray-400 flex-1 text-left">
-                                    Search applications...
+                                    Search applications, resources, and more...
                                 </span>
                             </button>
                         </div>
@@ -172,7 +172,7 @@ export function Header({
                                         className="fixed inset-0 z-40"
                                         onClick={() => setIsHelpDropdownOpen(false)}
                                     />
-                                    <div className="absolute right-0 top-full mt-3 w-80 bg-white rounded-2xl shadow-2xl shadow-gray-900/10 border border-gray-200/60 z-50 overflow-hidden backdrop-blur-xl">
+                                    <div className="absolute right-0 top-full mt-3 w-80 bg-white rounded-2xl shadow-2xl shadow-gray-900/10 border border-gray-200/60 z-50 overflow-hidden">
                                         <div className="p-4">
                                             <div className="px-4 py-3 mb-2">
                                                 <div className="font-bold text-[15px] text-[#052049] tracking-tight">
@@ -290,7 +290,7 @@ export function Header({
 
                         <button
                             onClick={onProfileClick}
-                            className="flex items-center gap-2 md:gap-3 hover:bg-gray-50/80 rounded-xl px-2 md:px-3 py-2 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#18A1CD] focus:ring-offset-2"
+                            className="flex items-center gap-2 md:gap-3 hover:bg-gray-50/80 px-2 md:px-3 py-2 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#18A1CD] focus:ring-offset-2"
                             aria-label="Open profile menu for Chris Garcia"
                         >
                             <div
@@ -360,9 +360,50 @@ export function Header({
                             <Newspaper className="w-5 h-5" strokeWidth={2.5} />
                             <span className="font-semibold">News</span>
                         </button>
+
+                        <div className="pt-4 mt-4 border-t border-gray-100">
+                            <p className="px-4 text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-2">Help & Support</p>
+                            <div className="space-y-1">
+                                <a
+                                    href="#"
+                                    className="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-700 hover:bg-gray-50 transition-all"
+                                >
+                                    <GraduationCap className="w-5 h-5 text-gray-500" strokeWidth={2} />
+                                    <span className="font-semibold text-sm">UC Learning Center</span>
+                                </a>
+                                <a
+                                    href="#"
+                                    className="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-700 hover:bg-gray-50 transition-all"
+                                >
+                                    <HelpCircle className="w-5 h-5 text-gray-500" strokeWidth={2} />
+                                    <span className="font-semibold text-sm">IT Service Desk</span>
+                                </a>
+                                <a
+                                    href="#"
+                                    className="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-700 hover:bg-gray-50 transition-all"
+                                >
+                                    <FileText className="w-5 h-5 text-gray-500" strokeWidth={2} />
+                                    <span className="font-semibold text-sm">IT Documentation</span>
+                                </a>
+                                <a
+                                    href="#"
+                                    className="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-700 hover:bg-gray-50 transition-all"
+                                >
+                                    <BookOpen className="w-5 h-5 text-gray-500" strokeWidth={2} />
+                                    <span className="font-semibold text-sm">Employee Handbook</span>
+                                </a>
+                                <a
+                                    href="#"
+                                    className="flex items-center gap-3 px-4 py-3 rounded-xl text-red-600 hover:bg-red-50 transition-all"
+                                >
+                                    <Flag className="w-5 h-5" strokeWidth={2} />
+                                    <span className="font-semibold text-sm">Report Phishing</span>
+                                </a>
+                            </div>
+                        </div>
                     </nav>
                 )}
             </div>
-        </header>
+        </header >
     );
 }

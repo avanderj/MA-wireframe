@@ -5,6 +5,7 @@ import {
     Sparkles,
     Boxes,
     Shield,
+    ChevronRight,
 } from "lucide-react";
 import { Application } from "../data/ucsf-applications";
 import { categoryColors } from "../utils/app-helpers";
@@ -116,8 +117,8 @@ export function UnifiedApplicationsSection({
                         <button
                             onClick={() => onViewModeChange("saved")}
                             className={`px-8 py-3.5 rounded-xl font-bold transition-all flex items-center gap-2 ${viewMode === "saved"
-                                    ? "bg-gradient-to-r from-[#052049] to-[#18A1CD] text-white shadow-md"
-                                    : "text-gray-700 hover:text-[#052049] hover:bg-gray-50"
+                                ? "bg-gradient-to-r from-[#052049] to-[#18A1CD] text-white shadow-md"
+                                : "text-gray-700 hover:text-[#052049] hover:bg-gray-50"
                                 }`}
                         >
                             <Bookmark className="w-4 h-4" strokeWidth={2.5} />
@@ -126,8 +127,8 @@ export function UnifiedApplicationsSection({
                         <button
                             onClick={() => onViewModeChange("all")}
                             className={`px-8 py-3.5 rounded-xl font-bold transition-all flex items-center gap-2 ${viewMode === "all"
-                                    ? "bg-gradient-to-r from-[#052049] to-[#18A1CD] text-white shadow-md"
-                                    : "text-gray-700 hover:text-[#052049] hover:bg-gray-50"
+                                ? "bg-gradient-to-r from-[#052049] to-[#18A1CD] text-white shadow-md"
+                                : "text-gray-700 hover:text-[#052049] hover:bg-gray-50"
                                 }`}
                         >
                             <Library className="w-4 h-4" strokeWidth={2.5} />
@@ -145,8 +146,8 @@ export function UnifiedApplicationsSection({
                                 <button
                                     onClick={() => onCuratedViewChange("all")}
                                     className={`px-5 py-2.5 rounded-xl font-bold text-sm transition-all ${curatedView === "all"
-                                            ? "bg-gradient-to-r from-[#052049] to-[#18A1CD] text-white shadow-md"
-                                            : "text-gray-700 hover:text-[#052049] hover:bg-white/60"
+                                        ? "bg-gradient-to-r from-[#052049] to-[#18A1CD] text-white shadow-md"
+                                        : "text-gray-700 hover:text-[#052049] hover:bg-white/60"
                                         }`}
                                 >
                                     All
@@ -154,8 +155,8 @@ export function UnifiedApplicationsSection({
                                 <button
                                     onClick={() => onCuratedViewChange("most-popular")}
                                     className={`px-5 py-2.5 rounded-xl font-bold text-sm transition-all flex items-center gap-2 ${curatedView === "most-popular"
-                                            ? "bg-gradient-to-r from-[#052049] to-[#18A1CD] text-white shadow-md"
-                                            : "text-gray-700 hover:text-[#052049] hover:bg-white/60"
+                                        ? "bg-gradient-to-r from-[#052049] to-[#18A1CD] text-white shadow-md"
+                                        : "text-gray-700 hover:text-[#052049] hover:bg-white/60"
                                         }`}
                                 >
                                     <TrendingUp className="w-4 h-4" strokeWidth={2.5} />
@@ -164,8 +165,8 @@ export function UnifiedApplicationsSection({
                                 <button
                                     onClick={() => onCuratedViewChange("recently-added")}
                                     className={`px-5 py-2.5 rounded-xl font-bold text-sm transition-all flex items-center gap-2 ${curatedView === "recently-added"
-                                            ? "bg-gradient-to-r from-[#052049] to-[#18A1CD] text-white shadow-md"
-                                            : "text-gray-700 hover:text-[#052049] hover:bg-white/60"
+                                        ? "bg-gradient-to-r from-[#052049] to-[#18A1CD] text-white shadow-md"
+                                        : "text-gray-700 hover:text-[#052049] hover:bg-white/60"
                                         }`}
                                 >
                                     <Sparkles className="w-4 h-4" strokeWidth={2.5} />
@@ -174,8 +175,8 @@ export function UnifiedApplicationsSection({
                                 <button
                                     onClick={() => onCuratedViewChange("bundles")}
                                     className={`px-5 py-2.5 rounded-xl font-bold text-sm transition-all flex items-center gap-2 ${curatedView === "bundles"
-                                            ? "bg-gradient-to-r from-[#052049] to-[#18A1CD] text-white shadow-md"
-                                            : "text-gray-700 hover:text-[#052049] hover:bg-white/60"
+                                        ? "bg-gradient-to-r from-[#052049] to-[#18A1CD] text-white shadow-md"
+                                        : "text-gray-700 hover:text-[#052049] hover:bg-white/60"
                                         }`}
                                 >
                                     <Boxes className="w-4 h-4" strokeWidth={2.5} />
@@ -214,8 +215,8 @@ export function UnifiedApplicationsSection({
                                         )
                                     }
                                     className={`px-4 py-2 text-sm font-semibold rounded-full border-2 transition-all whitespace-nowrap flex items-center gap-2 ${isActive
-                                            ? "bg-gradient-to-r from-[#052049] to-[#18A1CD] text-white border-transparent shadow-md"
-                                            : categoryColor
+                                        ? "bg-gradient-to-r from-[#052049] to-[#18A1CD] text-white border-transparent shadow-md"
+                                        : categoryColor
                                         }`}
                                 >
                                     {category}
@@ -234,13 +235,21 @@ export function UnifiedApplicationsSection({
                 {/* Special Sections for Curated Views */}
                 {curatedView === "bundles" && appBundles && onBundleClick ? (
                     <div>
-                        <div className="mb-6">
-                            <h3 className="text-xl font-bold text-[#052049] mb-2">
-                                App Bundles
-                            </h3>
-                            <p className="text-gray-600 text-sm">
-                                Curated collections based on common workflows and roles
-                            </p>
+                        <div className="mb-6 flex items-center gap-3">
+                            <div className="p-3 bg-gradient-to-br from-indigo-50 to-purple-50 rounded-xl">
+                                <Boxes
+                                    className="w-6 h-6 text-indigo-600"
+                                    strokeWidth={2.5}
+                                />
+                            </div>
+                            <div>
+                                <h3 className="text-2xl font-bold text-[#052049]">
+                                    App Bundles
+                                </h3>
+                                <p className="text-gray-600 text-sm">
+                                    Curated collections based on common workflows and roles
+                                </p>
+                            </div>
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                             {appBundles.map((bundle) => {

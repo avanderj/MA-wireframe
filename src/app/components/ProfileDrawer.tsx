@@ -50,7 +50,7 @@ export function ProfileDrawer({ isOpen, onClose, hasVersaAccess = false, onToggl
             </button>
 
             <div className="flex gap-4 sm:gap-6 items-start">
-              <div className="w-20 h-20 sm:w-24 sm:h-24 flex-shrink-0 rounded-2xl bg-gradient-to-br from-teal-400 to-cyan-500 flex items-center justify-center shadow-2xl font-bold text-3xl sm:text-4xl" aria-hidden="true">
+              <div className="w-20 h-20 sm:w-24 sm:h-24 flex-shrink-0 rounded-2xl border border-gray-200 bg-gradient-to-br from-teal-400 to-cyan-500 flex items-center justify-center shadow-2xl font-bold text-3xl sm:text-4xl" aria-hidden="true">
                 CG
               </div>
               <div className="flex-1 pt-2">
@@ -72,7 +72,7 @@ export function ProfileDrawer({ isOpen, onClose, hasVersaAccess = false, onToggl
                 </h3>
 
                 {/* Campus Content - No tabs here anymore */}
-                <div className="bg-gradient-to-br from-blue-50 to-teal-50 rounded-2xl p-6 border border-blue-100 space-y-4">
+                <div className="bg-white rounded-2xl p-6 border border-blue-100 space-y-4">
                   <div className="flex items-start gap-4">
                     <div className="flex-1">
                       <div className="text-sm text-gray-500 mb-1">Email</div>
@@ -143,8 +143,8 @@ export function ProfileDrawer({ isOpen, onClose, hasVersaAccess = false, onToggl
                   <button
                     onClick={() => setIdTab('campus')}
                     className={`pb-3 px-1 font-semibold transition-all relative ${idTab === 'campus'
-                        ? 'text-[#18A1CD]'
-                        : 'text-gray-500 hover:text-gray-700'
+                      ? 'text-[#18A1CD]'
+                      : 'text-gray-500 hover:text-gray-700'
                       }`}
                   >
                     Campus
@@ -155,8 +155,8 @@ export function ProfileDrawer({ isOpen, onClose, hasVersaAccess = false, onToggl
                   <button
                     onClick={() => setIdTab('health')}
                     className={`pb-3 px-1 font-semibold transition-all relative ${idTab === 'health'
-                        ? 'text-[#18A1CD]'
-                        : 'text-gray-500 hover:text-gray-700'
+                      ? 'text-[#18A1CD]'
+                      : 'text-gray-500 hover:text-gray-700'
                       }`}
                   >
                     Health
@@ -226,7 +226,7 @@ export function ProfileDrawer({ isOpen, onClose, hasVersaAccess = false, onToggl
                               </div>
                               <div>
                                 <div className="flex items-center gap-2">
-                                  <div className="font-bold text-red-900">Update Password</div>
+                                  <div className="font-bold text-red-900">Update Your Password</div>
                                   <span className="px-2 py-0.5 bg-gradient-to-r from-red-500 to-orange-500 text-white text-[10px] font-bold rounded-full shadow-sm">
                                     Overdue
                                   </span>
@@ -279,16 +279,16 @@ export function ProfileDrawer({ isOpen, onClose, hasVersaAccess = false, onToggl
                       <button
                         onClick={onToggleVersaAccess}
                         className={`w-full rounded-xl p-5 border-2 transition-all text-left group focus:outline-none focus:ring-2 focus:ring-[#18A1CD] focus:ring-offset-2 ${hasVersaAccess
-                            ? 'bg-gradient-to-br from-purple-50 to-indigo-50 border-purple-200 hover:border-purple-300'
-                            : 'bg-white border-gray-200 hover:border-[#18A1CD] hover:bg-gradient-to-br hover:from-blue-50 hover:to-teal-50'
+                          ? 'bg-gradient-to-br from-purple-50 to-indigo-50 border-purple-200 hover:border-purple-300'
+                          : 'bg-white border-gray-200 hover:border-[#18A1CD] hover:bg-gradient-to-br hover:from-blue-50 hover:to-teal-50'
                           }`}
                         aria-label={hasVersaAccess ? "Disable Versa AI Assistant" : "Enable Versa AI Assistant"}
                       >
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-4">
                             <div className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all ${hasVersaAccess
-                                ? 'bg-gradient-to-br from-purple-400 to-indigo-500'
-                                : 'bg-gradient-to-br from-purple-100 to-indigo-100 group-hover:from-[#052049] group-hover:to-[#18A1CD]'
+                              ? 'bg-gradient-to-br from-purple-400 to-indigo-500'
+                              : 'bg-gradient-to-br from-purple-100 to-indigo-100 group-hover:from-[#052049] group-hover:to-[#18A1CD]'
                               }`} aria-hidden="true">
                               <Sparkles className={`w-6 h-6 transition-colors ${hasVersaAccess ? 'text-white' : 'text-purple-600 group-hover:text-white'
                                 }`} strokeWidth={2.5} />
@@ -319,16 +319,16 @@ export function ProfileDrawer({ isOpen, onClose, hasVersaAccess = false, onToggl
                       <button
                         onClick={onAdminLogin}
                         className={`w-full rounded-xl p-5 border-2 transition-all text-left group focus:outline-none focus:ring-2 focus:ring-[#18A1CD] focus:ring-offset-2 ${isAdmin
-                            ? 'bg-gradient-to-br from-purple-50 to-indigo-50 border-purple-200 hover:border-purple-300'
-                            : 'bg-white border-gray-200 hover:border-[#18A1CD] hover:bg-gradient-to-br hover:from-blue-50 hover:to-teal-50'
+                          ? 'bg-gradient-to-br from-purple-50 to-indigo-50 border-purple-200 hover:border-purple-300'
+                          : 'bg-white border-gray-200 hover:border-[#18A1CD] hover:bg-gradient-to-br hover:from-blue-50 hover:to-teal-50'
                           }`}
                         aria-label={isAdmin ? "Disable Admin Dashboard" : "Enable Admin Dashboard"}
                       >
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-4">
                             <div className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all ${isAdmin
-                                ? 'bg-gradient-to-br from-purple-400 to-indigo-500'
-                                : 'bg-gradient-to-br from-purple-100 to-indigo-100 group-hover:from-[#052049] group-hover:to-[#18A1CD]'
+                              ? 'bg-gradient-to-br from-purple-400 to-indigo-500'
+                              : 'bg-gradient-to-br from-purple-100 to-indigo-100 group-hover:from-[#052049] group-hover:to-[#18A1CD]'
                               }`} aria-hidden="true">
                               <Lock className={`w-6 h-6 transition-colors ${isAdmin ? 'text-white' : 'text-purple-600 group-hover:text-white'
                                 }`} strokeWidth={2.5} />
