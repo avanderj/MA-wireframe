@@ -1,0 +1,41 @@
+/* Modern Academic UI Enhancements */
+
+/* Refined glassmorphism effects */
+.glass-effect {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* Sophisticated shadows */
+.shadow-academic {
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.03), 0 1px 2px 0 rgba(0, 0, 0, 0.02);
+}
+
+.shadow-academic-lg {
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.03);
+}
+
+.shadow-academic-xl {
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.08), 0 10px 20px -8px rgba(0, 0, 0, 0.04);
+}
+
+/* Refined typography */
+.text-refined {
+  letter-spacing: -0.01em;
+  font-feature-settings: 'ss01', 'cv01', 'cv02';
+}
+
+.text-refined-tight {
+  letter-spacing: -0.02em;
+  font-feature-settings: 'ss01', 'cv01', 'cv02';
+}
+
+/* Smooth animations */
+.transition-academic {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.transition-academic-fast {
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
