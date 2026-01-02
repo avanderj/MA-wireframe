@@ -52,8 +52,28 @@ export default function App() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   // Versa access state
   const [hasVersaAccess, setHasVersaAccess] = useState(false);
-  // Demo: navigation layout
+  // Demo: navigation layout (user preference)
   const [navLayout, setNavLayout] = useState<"top" | "sidebar">("top");
+  // Viewport state: force top nav on mobile (< lg)
+  const [isMobileView, setIsMobileView] = useState(false);
+  useEffect(() => {
+    const mql = window.matchMedia("(max-width: 1023px)"); // Tailwind lg starts at 1024px
+    const update = () => setIsMobileView(mql.matches);
+    update();
+    // Support older Safari
+    if (typeof mql.addEventListener === "function") {
+      mql.addEventListener("change", update);
+      return () => mql.removeEventListener("change", update);
+    } else {
+      // @ts-expect-error - legacy API
+      mql.addListener(update);
+      // @ts-expect-error - legacy API
+      return () => mql.removeListener(update);
+    }
+  }, []);
+  const effectiveNavLayout: "top" | "sidebar" = isMobileView
+    ? "top"
+    : navLayout;
   // Admin state
   const [isAdmin, setIsAdmin] = useState(false); // Load applications and bundles from localStorage or use defaults
   const [applications, setApplications] = useState<Application[]>(() => {
@@ -239,7 +259,7 @@ export default function App() {
   return (
     <div
       className={`min-h-screen bg-gray-50 ${
-        navLayout === "sidebar" ? "flex" : "flex flex-col"
+        effectiveNavLayout === "sidebar" ? "flex" : "flex flex-col"
       }`}
     >
       {/* Skip to main content link for WCAG accessibility */}
@@ -255,7 +275,7 @@ export default function App() {
         onViewChange={setActiveView}
         onProfileClick={() => setIsProfileDrawerOpen(true)}
         onSearchClick={() => setIsSearchOpen(true)}
-        navLayout={navLayout}
+        navLayout={effectiveNavLayout}
       />
       {/* Main Content */}
       <div className="flex-1 flex flex-col min-h-screen">
@@ -338,7 +358,7 @@ export default function App() {
         onClose={() => setIsProfileDrawerOpen(false)}
         hasVersaAccess={hasVersaAccess}
         onToggleVersaAccess={() => setHasVersaAccess(!hasVersaAccess)}
-        hasSidebarNav={navLayout === "sidebar"}
+        hasSidebarNav={effectiveNavLayout === "sidebar"}
         onToggleSidebarNav={() =>
           setNavLayout((prev) => (prev === "sidebar" ? "top" : "sidebar"))
         }
